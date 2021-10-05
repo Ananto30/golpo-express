@@ -14,6 +14,11 @@ const postSchema = new Schema(
         date: Date,
       },
     ],
+    loves: [
+      {
+        author: String
+      }
+    ],
   },
   { collection: "post" } // TODO: should be removed, need to fix mongo model
 );
