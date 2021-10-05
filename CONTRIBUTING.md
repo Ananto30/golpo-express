@@ -1,5 +1,5 @@
 ## Contribution guideline
-- Contribution is very easy as there is no test 😅 Just test the feature working with api call using Postman or Thunder client or cURL or how you like 😃
+- Contribution is very easy as there is no unit tests 😅 Just test the feature working with api call using Postman or Thunder client or cURL or how you like 😃 But **please test**.
 - Please make sure you don't change any other design/code except the feature.
 
 
