@@ -1,7 +1,6 @@
 ## Contribution guideline
-- Contribution is very easy as there is no test 😅 Just test the feature working visually.
+- Contribution is very easy as there is no test 😅 Just test the feature working with api calls.
 - Please make sure you don't change any other design/code except the feature.
-- Please add a screenshot if any UI changes.
 
 
 ## Branching guide
