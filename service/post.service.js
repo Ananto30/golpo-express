@@ -31,6 +31,7 @@ exports.createPost = async (author, text) => {
     text: text,
     date: new Date(),
     comments: [],
+    loves: []
   });
 
   const data = {
@@ -72,6 +73,40 @@ exports.createComment = async (author, text, postId) => {
   await activityService.createActivity(data);
 
   return post;
+};
+
+exports.reactLove = async (author, postId) => {
+  const post = await Post.findOne({
+    _id: postId,
+    "loves.author": author,
+  });
+  if (post) {
+    return post;
+  }
+  const postUpdate = await Post.findOneAndUpdate(
+    {
+      _id: postId,
+    },
+    {
+      $push: {
+        loves: {
+          author: author,
+        },
+      },
+    },
+    {
+      new: true,
+    }
+  );
+
+  const data = {
+    username: author,
+    summary: `reacted love on ${postUpdate.author}'s post`,
+    link: `/post/${postUpdate._id}`,
+  };
+  await activityService.createActivity(data);
+
+  return postUpdate;
 };
 
 exports.getPostsByUsername = async (username) => {

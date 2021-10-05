@@ -21,6 +21,12 @@ router.post(
   postController.createComment
 );
 
+router.post(
+  "/:postId/love",
+  tokenMiddleware.checkToken,
+  postController.reactLove
+);
+
 router.get(
     "/user/me",
     tokenMiddleware.checkToken,

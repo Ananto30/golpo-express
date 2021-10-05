@@ -68,6 +68,22 @@ exports.createComment = async (req, res) => {
   }
 };
 
+
+exports.reactLove = async (req, res) => {
+  try {
+    const { username } = req.decoded;
+    const { postId } = req.params;
+
+    const post = await postService.reactLove(username, postId);
+
+    res.status(200).json(post);
+  } catch (err) {
+    res.status(500).json({ errors: err.message });
+    return;
+  }
+};
+
+
 exports.getPostsByUsername = async (req, res) => {
   try {
     const { username } = req.params;
