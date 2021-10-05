@@ -1,0 +1,27 @@
+{
+  "name": "golpo13-backend",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "bootstrap": "node ./scripts/bootstrap.js"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-validator": "^6.12.1",
+    "googleapis": "^60.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.9",
+    "morgan": "~1.9.1",
+    "socket.io": "^2.4.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "rimraf": "^3.0.2"
+  }
+}
