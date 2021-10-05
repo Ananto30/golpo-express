@@ -56,7 +56,7 @@ Here is the Postman collection - [Golpo Postman](https://documenter.getpostman.c
 
 ## Express tasks
 
-Here are the tasks - [Hacktoberfest](https://github.com/Ananto30/golpo-svelte/issues?q=is%3Aissue+is%3Aopen+label%3AHacktoberfest)
+Here are the tasks - [Hacktoberfest](https://github.com/Ananto30/golpo-express/issues?q=is%3Aissue+is%3Aopen+label%3AHacktoberfest)
 
 (Tasks are being added daily)
 
