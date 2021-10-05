@@ -27,7 +27,6 @@ router.post(
   postController.reactLove
 );
 
-
 router.get(
     "/user/me",
     tokenMiddleware.checkToken,

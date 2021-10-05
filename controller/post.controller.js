@@ -71,13 +71,6 @@ exports.createComment = async (req, res) => {
 
 exports.reactLove = async (req, res) => {
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      res.status(422).json({ errors: errors.array() });
-      return;
-    }
-
     const { username } = req.decoded;
     const { postId } = req.params;
 
