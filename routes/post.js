@@ -4,8 +4,10 @@ const router = express.Router();
 const postController = require("../controller/post.controller");
 const tokenMiddleware = require("../middleware/token");
 
+router.get("/tags", postController.getAllTags);
 router.get("/", tokenMiddleware.checkToken, postController.getAll);
 router.get("/:id", tokenMiddleware.checkToken, postController.getById);
+
 
 router.post(
   "/",
