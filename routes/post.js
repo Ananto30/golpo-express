@@ -24,7 +24,6 @@ router.post(
 router.post(
   "/:postId/love",
   tokenMiddleware.checkToken,
-  postController.validate("createPost"),
   postController.reactLove
 );
 
