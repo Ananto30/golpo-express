@@ -1,5 +1,5 @@
 const { body, validationResult } = require("express-validator");
-
+const tags = require('../constants');
 const postService = require("../service/post.service");
 
 exports.getAll = async (req, res) => {
@@ -33,11 +33,12 @@ exports.createPost = async (req, res) => {
       res.status(422).json({ errors: errors.array() });
       return;
     }
-
+    
     const { text } = req.body;
     const { username } = req.decoded;
+    const { tags } = req.body;
 
-    const post = await postService.createPost(username, text);
+    const post = await postService.createPost(username, text, tags);
 
     res.status(200).json(post);
   } catch (err) {
@@ -120,3 +121,7 @@ exports.validate = (method) => {
     }
   }
 };
+
+exports.getAllTags = (req,res) => {
+  res.status(200).json({tags})
+}

@@ -25,13 +25,15 @@ exports.getPostById = async (id) => {
   });
 };
 
-exports.createPost = async (author, text) => {
+exports.createPost = async (author, text, tags) => {
+  
   const post = await Post.create({
     author: author,
     text: text,
     date: new Date(),
     comments: [],
-    loves: []
+    loves: [],
+    tags: tags
   });
 
   const data = {

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const tags = require('../constants');
 
 const postSchema = new Schema(
   {
@@ -19,6 +20,7 @@ const postSchema = new Schema(
         author: String
       }
     ],
+    tags: {type: [String], enum: tags}
   },
   { collection: "post" } // TODO: should be removed, need to fix mongo model
 );
