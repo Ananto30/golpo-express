@@ -124,10 +124,7 @@ exports.validate = (method) => {
           require_tld: true,
           require_protocol: true,
         }),
-        body("url", "Adult contents are not allowed").custom((value) => {
-          const isAdultUrl = adultURLs.includes(value);
-          if (isAdultUrl) throw new Error("This is an adult URL");
-        }),
+        body("url", "Adult contents are not allowed").isIn(!adultURLs)
       ];
     }
   }
