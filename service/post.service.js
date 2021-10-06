@@ -2,6 +2,7 @@ const PostModel = require("../model/post.model");
 const Post = PostModel.Post;
 
 const activityService = require("./activity.service");
+const { getLinkPreview } = require("link-preview-js");
 
 exports.getAllPostsWithCommentCount = async () => {
   const posts = await Post.aggregate([
@@ -31,7 +32,7 @@ exports.createPost = async (author, text) => {
     text: text,
     date: new Date(),
     comments: [],
-    loves: []
+    loves: [],
   });
 
   const data = {
@@ -126,4 +127,9 @@ exports.getPostsByUsername = async (username) => {
     },
   ]).exec();
   return posts;
+};
+
+exports.extractUrlMetadata = async (url) => {
+  const metadata = await getLinkPreview(url);
+  return metadata;
 };
