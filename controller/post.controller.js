@@ -124,7 +124,7 @@ exports.validate = (method) => {
           require_tld: true,
           require_protocol: true,
         }),
-        body("url", "Adult contents are not allowed").isIn(!adultURLs)
+        body("url", "Adult contents are not allowed").not().isIn(adultURLs)
       ];
     }
   }
