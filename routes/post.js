@@ -12,14 +12,14 @@ router.get("/:id", tokenMiddleware.checkToken, postController.getById);
 router.post(
   "/",
   tokenMiddleware.checkToken,
-  postController.validate("createPost"),
+  postController.validate("validateUrl"),
   postController.createPost
 );
 
 router.post(
   "/:postId/comment",
   tokenMiddleware.checkToken,
-  postController.validate("createPost"),
+  postController.validate("validateComment"),
   postController.createComment
 );
 

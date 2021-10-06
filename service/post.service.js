@@ -25,11 +25,11 @@ exports.getPostById = async (id) => {
   });
 };
 
-exports.createPost = async (author, text, tags) => {
+exports.createPost = async (author, url, tags) => {
   
   const post = await Post.create({
     author: author,
-    text: text,
+    url: url,
     date: new Date(),
     comments: [],
     loves: [],
@@ -39,7 +39,6 @@ exports.createPost = async (author, text, tags) => {
   const data = {
     username: author,
     summary: "posted",
-    extraText: text.substring(0, 50),
     link: `/post/${post._id}`,
   };
   await activityService.createActivity(data);
