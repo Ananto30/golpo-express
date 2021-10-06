@@ -1,5 +1,5 @@
 const { body, validationResult } = require("express-validator");
-const tags = require('../constants');
+const {tags, adultURLs} = require('../constants');
 const postService = require("../service/post.service");
 
 exports.getAll = async (req, res) => {
@@ -34,11 +34,11 @@ exports.createPost = async (req, res) => {
       return;
     }
     
-    const { text } = req.body;
+    const { url } = req.body;
     const { username } = req.decoded;
     const { tags } = req.body;
 
-    const post = await postService.createPost(username, text, tags);
+    const post = await postService.createPost(username, url, tags);
 
     res.status(200).json(post);
   } catch (err) {
@@ -69,7 +69,6 @@ exports.createComment = async (req, res) => {
   }
 };
 
-
 exports.reactLove = async (req, res) => {
   try {
     const { username } = req.decoded;
@@ -83,7 +82,6 @@ exports.reactLove = async (req, res) => {
     return;
   }
 };
-
 
 exports.getPostsByUsername = async (req, res) => {
   try {
@@ -111,12 +109,22 @@ exports.getPostsByToken = async (req, res) => {
 
 exports.validate = (method) => {
   switch (method) {
-    case "createPost": {
+    case "validateComment": {
       return [
         body("text", "text should be between 1 to 1000 characters").isLength({
           min: 1,
           max: 1000,
         }),
+      ];
+    }
+    case "validateUrl": {
+      return [
+        body("url", "Must be a Valid URL").isURL({
+          protocols: ["http", "https", "ftp"],
+          require_tld: true,
+          require_protocol: true,
+        }),
+        body("url", "Adult contents are not allowed").not().isIn(adultURLs)
       ];
     }
   }

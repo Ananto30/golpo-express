@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const tags = require('../constants');
+const {tags} = require('../constants');
 
 const postSchema = new Schema(
   {
     author: String,
-    text: String,
+    url: String,
     date: Date, //TODO: make it created_at
     updated_at: { type: Date, default: Date.now },
     comments: [
