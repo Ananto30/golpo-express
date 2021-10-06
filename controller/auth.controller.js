@@ -9,6 +9,7 @@ exports.login = async (req, res) => {
 
     if (!errors.isEmpty()) {
       res.status(422).json({ errors: errors.array() });
+      console.log(errors);
       return;
     }
 
@@ -22,6 +23,7 @@ exports.login = async (req, res) => {
     res.status(200).json({ access_token: token });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -37,6 +39,7 @@ exports.googleLogin = async (req, res) => {
     res.status(200).json({ access_token: token });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -48,6 +51,7 @@ exports.getGoogleAuthUrl = async (req, res) => {
     res.status(200).json({ auth_url: url });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -58,6 +62,7 @@ exports.getTokenByGoogleCode = async (req, res) => {
 
     if (!errors.isEmpty()) {
       res.status(422).json({ errors: errors.array() });
+      console.log(errors);
       return;
     }
 
@@ -69,6 +74,7 @@ exports.getTokenByGoogleCode = async (req, res) => {
     res.status(200).json({ access_token: token });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
