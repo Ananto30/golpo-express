@@ -15,6 +15,7 @@
     "express-validator": "^6.12.1",
     "googleapis": "^60.0.1",
     "jsonwebtoken": "^8.5.1",
+    "link-preview-js": "^2.1.8",
     "mongoose": "^5.13.9",
     "morgan": "~1.9.1",
     "socket.io": "^2.4.1"
