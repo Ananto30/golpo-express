@@ -9,6 +9,7 @@ exports.getAllUsers = async (req, res) => {
     res.status(200).json({ users: users });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -22,6 +23,7 @@ exports.getUserMetaByToken = async (req, res) => {
     res.status(200).json(userMeta);
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -35,6 +37,7 @@ exports.getUserMetaByUsername = async (req, res) => {
     res.status(200).json(userMeta);
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -45,6 +48,7 @@ exports.updateMeta = async (req, res) => {
 
     if (!errors.isEmpty()) {
       res.status(422).json({ errors: errors.array() });
+      console.log(errors);
       return;
     }
 
@@ -55,6 +59,7 @@ exports.updateMeta = async (req, res) => {
     res.status(200).json(userMeta);
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -65,6 +70,7 @@ exports.getUsersMeta = async (req, res) => {
 
     if (!errors.isEmpty()) {
       res.status(422).json({ errors: errors.array() });
+      console.log(errors);
       return;
     }
 
@@ -75,6 +81,7 @@ exports.getUsersMeta = async (req, res) => {
     res.status(200).json({ users: usersMeta });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
