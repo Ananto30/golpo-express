@@ -44,14 +44,6 @@ exports.getUserMetaByUsername = async (req, res) => {
 
 exports.updateMeta = async (req, res) => {
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      res.status(422).json({ errors: errors.array() });
-      console.log(errors);
-      return;
-    }
-
     const { username } = req.decoded;
 
     const userMeta = await userService.updateUserMeta(username, req.body);
@@ -66,14 +58,6 @@ exports.updateMeta = async (req, res) => {
 
 exports.getUsersMeta = async (req, res) => {
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      res.status(422).json({ errors: errors.array() });
-      console.log(errors);
-      return;
-    }
-
     const { usernames } = req.query;
 
     const usersMeta = await userService.getUsersMeta(usernames);
@@ -86,13 +70,16 @@ exports.getUsersMeta = async (req, res) => {
   }
 };
 
-exports.validate = (method) => {
-  switch (method) {
-    case "updateMeta": {
-      return [body("work"), body("tagline"), body("image")];
-    }
-    case "getUsersMeta": {
-      return [query("usernames").isArray()];
-    }
-  }
+exports.validators = {
+  updateMeta: {
+    work: { in: ["body"] },
+    tagline: { in: ["body"] },
+    image: { in: ["body"] },
+  },
+  getUsersMeta: {
+    usernames: {
+      in: ["query"],
+      isArray: true,
+    },
+  },
 };
