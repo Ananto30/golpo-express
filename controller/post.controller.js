@@ -4,7 +4,7 @@ const postService = require("../service/post.service");
 
 exports.getAll = async (req, res) => {
   try {
-    const posts = await postService.getAllPostsWithCommentCount();
+    const posts = await postService.getAllPosts();
 
     res.status(200).json({ posts: posts });
   } catch (err) {
