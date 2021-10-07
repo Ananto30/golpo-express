@@ -9,6 +9,7 @@ exports.getAll = async (req, res) => {
     res.status(200).json({ posts: posts });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -21,6 +22,7 @@ exports.getById = async (req, res) => {
     res.status(200).json(post);
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -31,6 +33,7 @@ exports.createPost = async (req, res) => {
 
     if (!errors.isEmpty()) {
       res.status(422).json({ errors: errors.array() });
+      console.log(errors);
       return;
     }
     
@@ -43,6 +46,7 @@ exports.createPost = async (req, res) => {
     res.status(200).json(post);
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -53,6 +57,7 @@ exports.createComment = async (req, res) => {
 
     if (!errors.isEmpty()) {
       res.status(422).json({ errors: errors.array() });
+      console.log(errors);
       return;
     }
 
@@ -65,6 +70,7 @@ exports.createComment = async (req, res) => {
     res.status(200).json(post);
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -79,6 +85,7 @@ exports.reactLove = async (req, res) => {
     res.status(200).json(post);
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -91,6 +98,7 @@ exports.getPostsByUsername = async (req, res) => {
     res.status(200).json({ posts });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -103,6 +111,7 @@ exports.getPostsByToken = async (req, res) => {
     res.status(200).json({ posts });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };

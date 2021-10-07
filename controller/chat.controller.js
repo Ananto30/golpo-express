@@ -10,6 +10,7 @@ exports.getChats = async (req, res) => {
     res.status(200).json({ chats: chats });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -23,6 +24,7 @@ exports.getByReceiver = async (req, res) => {
     res.status(200).json(chats);
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -33,6 +35,7 @@ exports.sendChat = async (req, res) => {
 
     if (!errors.isEmpty()) {
       res.status(422).json({ errors: errors.array() });
+      console.log(errors);
       return;
     }
 
@@ -45,6 +48,7 @@ exports.sendChat = async (req, res) => {
     res.status(200).json(chats);
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -55,6 +59,7 @@ exports.sendMessage = async (req, res) => {
 
     if (!errors.isEmpty()) {
       res.status(422).json({ errors: errors.array() });
+      console.log(errors);
       return;
     }
 
@@ -67,6 +72,7 @@ exports.sendMessage = async (req, res) => {
     res.status(200).json(chats);
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
