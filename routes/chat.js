@@ -3,6 +3,7 @@ const router = express.Router();
 
 const chatController = require("../controller/chat.controller");
 const tokenMiddleware = require("../middleware/token");
+const validateSchema = require("../middleware/validate");
 
 router.get("/", tokenMiddleware.checkToken, chatController.getChats);
 
@@ -15,14 +16,14 @@ router.get(
 router.post(
   "/:receiver",
   tokenMiddleware.checkToken,
-  chatController.validate("sendChat"),
+  validateSchema(chatController.validators.sendChat),
   chatController.sendChat
 );
 
 router.post(
   "/:receiver/message",
   tokenMiddleware.checkToken,
-  chatController.validate("sendChat"),
+  validateSchema(chatController.validators.sendChat),
   chatController.sendMessage
 );
 

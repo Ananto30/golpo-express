@@ -19,7 +19,10 @@ exports.getByReceiver = async (req, res) => {
   try {
     const { username } = req.decoded;
     const { receiver } = req.params;
-    const chats = await chatService.getChatByUsernameForUser(username, receiver);
+    const chats = await chatService.getChatByUsernameForUser(
+      username,
+      receiver
+    );
 
     res.status(200).json(chats);
   } catch (err) {
@@ -31,14 +34,6 @@ exports.getByReceiver = async (req, res) => {
 
 exports.sendChat = async (req, res) => {
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      res.status(422).json({ errors: errors.array() });
-      console.log(errors);
-      return;
-    }
-
     const { text } = req.body;
     const { receiver } = req.params;
     const { username } = req.decoded;
@@ -55,14 +50,6 @@ exports.sendChat = async (req, res) => {
 
 exports.sendMessage = async (req, res) => {
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      res.status(422).json({ errors: errors.array() });
-      console.log(errors);
-      return;
-    }
-
     const { text } = req.body;
     const { receiver } = req.params;
     const { username } = req.decoded;
@@ -77,10 +64,15 @@ exports.sendMessage = async (req, res) => {
   }
 };
 
-exports.validate = (method) => {
-  switch (method) {
-    case "sendChat": {
-      return [param("receiver").not().isEmpty(), body("text").not().isEmpty()];
-    }
-  }
+exports.validators = {
+  sendChat: {
+    receiver: {
+      in: ["params"],
+      isEmpty: { negated: true },
+    },
+    text: {
+      in: ["body"],
+      isEmpty: { negated: true },
+    },
+  },
 };
