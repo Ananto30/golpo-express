@@ -62,6 +62,8 @@ Here are the tasks - [Hacktoberfest](https://github.com/Ananto30/golpo-express/i
 
 **Feel free to enhance code and make express better!** 😃
 
+**Please test before creating PR** 🙏
+
 ## Svelte tasks
 
 Visit the Svelte repo - [github.com/ananto30/golpo-svelte](https://github.com/Ananto30/golpo-svelte)
