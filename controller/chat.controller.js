@@ -1,5 +1,3 @@
-const { body, validationResult, param } = require("express-validator");
-
 const chatService = require("../service/conversation.service");
 
 exports.getChats = async (req, res) => {
