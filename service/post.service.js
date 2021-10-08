@@ -28,11 +28,18 @@ exports.getPostById = async (id) => {
   });
 };
 
-exports.createPost = async (author, text, tags) => {
+exports.createPost = async (author, url, tags) => {
+  const metadata = await extractUrlMetadata(url);
+
   const post = await Post.create({
     author: author,
-    text: text,
-    date: new Date(),
+    url: url,
+    title: metadata.title,
+    description: metadata.description,
+    image: metadata.images[0],
+    site_name: metadata.siteName,
+    favicon: metadata.favicons[0],
+    created_at: new Date(),
     comments: [],
     loves: [],
     tags: tags,
@@ -41,7 +48,6 @@ exports.createPost = async (author, text, tags) => {
   const data = {
     username: author,
     summary: "posted",
-    extraText: text.substring(0, 50),
     link: `/post/${post._id}`,
   };
   await activityService.createActivity(data);
@@ -132,7 +138,7 @@ exports.getPostsByUsername = async (username) => {
   return posts;
 };
 
-exports.extractUrlMetadata = async (url) => {
+const extractUrlMetadata = async (url) => {
   const metadata = await getLinkPreview(url);
   return metadata;
 };

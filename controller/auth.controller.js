@@ -1,17 +1,8 @@
-const { body, validationResult } = require("express-validator");
-
 const authService = require("../service/auth.service");
 const googleAuthService = require("../service/google.auth.service");
 
 exports.login = async (req, res) => {
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      res.status(422).json({ errors: errors.array() });
-      return;
-    }
-
     const { username, password } = req.body;
 
     const token = await authService.verifyUserAndGenerateToken(
@@ -22,6 +13,7 @@ exports.login = async (req, res) => {
     res.status(200).json({ access_token: token });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -37,6 +29,7 @@ exports.googleLogin = async (req, res) => {
     res.status(200).json({ access_token: token });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -48,19 +41,13 @@ exports.getGoogleAuthUrl = async (req, res) => {
     res.status(200).json({ auth_url: url });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
 
 exports.getTokenByGoogleCode = async (req, res) => {
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      res.status(422).json({ errors: errors.array() });
-      return;
-    }
-
     const { code } = req.body;
 
     const token = await googleAuthService.getTokenByGoogleCode(code);
@@ -69,20 +56,17 @@ exports.getTokenByGoogleCode = async (req, res) => {
     res.status(200).json({ access_token: token });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
 
-exports.validate = (method) => {
-  switch (method) {
-    case "login": {
-      return [
-        body("username", "username is required").exists(),
-        body("password", "password is required").exists(),
-      ];
-    }
-    case "getTokenByGoogleCode": {
-      return [body("code", "code is required").exists()];
-    }
-  }
+exports.validators = {
+  login: {
+    username: { exists: true, errorMessage: "username is required" },
+    password: { exists: true, errorMessage: "password is required" },
+  },
+  getTokenByGoogleCode: {
+    code: { exists: true, errorMessage: "code is required" },
+  },
 };

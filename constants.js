@@ -21,4 +21,12 @@ const tags = ["Music",
     "Open-Source",
     "Programming"]
 
-module.exports = tags;
+const adultURLs = [
+    "https://www.timeout.com",
+    "https://www.commonsensemedia.org",
+    "https://www.ranker.com",
+    "https://www.vanityfair.com",
+];
+      
+
+module.exports = {tags, adultURLs};

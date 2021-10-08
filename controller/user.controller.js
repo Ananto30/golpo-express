@@ -9,6 +9,7 @@ exports.getAllUsers = async (req, res) => {
     res.status(200).json({ users: users });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -22,6 +23,7 @@ exports.getUserMetaByToken = async (req, res) => {
     res.status(200).json(userMeta);
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -35,19 +37,13 @@ exports.getUserMetaByUsername = async (req, res) => {
     res.status(200).json(userMeta);
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
 
 exports.updateMeta = async (req, res) => {
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      res.status(422).json({ errors: errors.array() });
-      return;
-    }
-
     const { username } = req.decoded;
 
     const userMeta = await userService.updateUserMeta(username, req.body);
@@ -55,19 +51,13 @@ exports.updateMeta = async (req, res) => {
     res.status(200).json(userMeta);
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
 
 exports.getUsersMeta = async (req, res) => {
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      res.status(422).json({ errors: errors.array() });
-      return;
-    }
-
     const { usernames } = req.query;
 
     const usersMeta = await userService.getUsersMeta(usernames);
@@ -75,17 +65,21 @@ exports.getUsersMeta = async (req, res) => {
     res.status(200).json({ users: usersMeta });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
 
-exports.validate = (method) => {
-  switch (method) {
-    case "updateMeta": {
-      return [body("work"), body("tagline"), body("image")];
-    }
-    case "getUsersMeta": {
-      return [query("usernames").isArray()];
-    }
-  }
+exports.validators = {
+  updateMeta: {
+    work: { in: ["body"] },
+    tagline: { in: ["body"] },
+    image: { in: ["body"] },
+  },
+  getUsersMeta: {
+    usernames: {
+      in: ["query"],
+      isArray: true,
+    },
+  },
 };

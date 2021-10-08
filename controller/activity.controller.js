@@ -9,6 +9,7 @@ exports.getAllActivities = async (req, res) => {
     res.status(200).json({ activities: activities });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };
@@ -22,6 +23,7 @@ exports.getActivitiesByToken = async (req, res) => {
     res.status(200).json({ activities: activities });
   } catch (err) {
     res.status(500).json({ errors: err.message });
+    console.log(err);
     return;
   }
 };

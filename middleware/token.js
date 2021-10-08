@@ -11,7 +11,9 @@ exports.checkToken = (req, res, next) => {
   if (token) {
     jwt.verify(token, config.jwtSecret, (err, decoded) => {
       if (err) {
+        console.log(err);
         return res.status(403).json({ errors: "Token is not valid" });
+        
       } else {
         req.decoded = decoded;
         next();

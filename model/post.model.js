@@ -1,26 +1,31 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const tags = require('../constants');
+const { tags } = require("../constants");
 
 const postSchema = new Schema(
   {
     author: String,
-    text: String,
-    date: Date, //TODO: make it created_at
+    url: String,
+    title: String,
+    description: String,
+    image: String,
+    site_name: String,
+    favicon: String,
+    created_at: Date,
     updated_at: { type: Date, default: Date.now },
     comments: [
       {
         author: String,
         text: String,
-        date: Date,
+        created_at: Date,
       },
     ],
     loves: [
       {
-        author: String
-      }
+        author: String,
+      },
     ],
-    tags: {type: [String], enum: tags}
+    tags: { type: [String], enum: tags },
   },
   { collection: "post" } // TODO: should be removed, need to fix mongo model
 );
