@@ -13,8 +13,8 @@ exports.getAllPosts = async () => {
         text: 1,
         date: 1,
         comments: { $size: "$comments" },
-        loveCount: { $size: "$loves" },
-        //isLovedByMe: false
+        loves: 1,
+        loveCount: { $size: "$loves" }
       },
     },
   ]).exec();
