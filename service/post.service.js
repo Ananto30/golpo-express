@@ -4,7 +4,7 @@ const Post = PostModel.Post;
 const activityService = require("./activity.service");
 const { getLinkPreview } = require("link-preview-js");
 
-exports.getAllPostsWithCommentCount = async () => {
+exports.getAllPosts = async () => {
   const posts = await Post.aggregate([
     { $match: {} },
     {
@@ -13,6 +13,8 @@ exports.getAllPostsWithCommentCount = async () => {
         text: 1,
         date: 1,
         comments: { $size: "$comments" },
+        loves: 1,
+        loveCount: { $size: "$loves" }
       },
     },
   ]).exec();
