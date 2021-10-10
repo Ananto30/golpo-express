@@ -6,8 +6,10 @@ exports.getAll = async (req, res) => {
     const posts = await postService.getAllPosts();
     posts.forEach(function (post) {
       post.isLovedByMe = false;
-      if (post.loves.find((love) => love.author === req.decoded.username))
-        return (post.isLovedByMe = true);
+      post.loves.forEach(function (love) {
+        if (love.author === req.decoded.username)
+          return (post.isLovedByMe = true);
+      });
     });
     res.status(200).json({ posts: posts });
   } catch (err) {
