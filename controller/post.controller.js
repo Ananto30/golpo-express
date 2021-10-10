@@ -8,7 +8,7 @@ exports.getAll = async (req, res) => {
       post.isLovedByMe = false;
       post.loves.forEach(function (love) {
         if (love.author === req.decoded.username)
-          return post.isLovedByMe = true;
+          return (post.isLovedByMe = true);
       });
     });
     res.status(200).json({ posts: posts });
