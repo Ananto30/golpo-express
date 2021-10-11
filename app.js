@@ -10,6 +10,7 @@ const postRouter = require("./routes/post");
 const chatRouter = require("./routes/chat");
 const userRouter = require("./routes/user");
 const activityRouter = require("./routes/activity");
+const notificationRouter = require("./routes/notification");
 
 const config = require("./config");
 
@@ -54,6 +55,7 @@ app.use("/api/post", postRouter);
 app.use("/api/chat", chatRouter);
 app.use("/api/user", userRouter);
 app.use("/api/activity", activityRouter);
+app.use("/api/notification", notificationRouter);
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
