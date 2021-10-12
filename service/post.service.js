@@ -2,6 +2,7 @@ const PostModel = require("../model/post.model");
 const Post = PostModel.Post;
 
 const activityService = require("./activity.service");
+const notificationService = require("./notification.service");
 const { getLinkPreview } = require("link-preview-js");
 
 exports.getAllPosts = async () => {
@@ -81,6 +82,8 @@ exports.createComment = async (author, text, postId) => {
       new: true,
     }
   );
+
+  await notificationService.createCommentNotification(postId, author);
 
   const data = {
     username: author,
