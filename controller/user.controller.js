@@ -70,6 +70,23 @@ exports.getUsersMeta = async (req, res) => {
   }
 };
 
+exports.followUser = async (req, res) => {
+  try {
+    const { username } = req.decoded;
+    const userToFollow = await userService.getUserMeta(req.body.username);
+    const userMeta = await userService.followUser(
+      username,
+      userToFollow.username
+    );
+
+    res.status(200).json(userMeta);
+  } catch (err) {
+    res.status(500).json({ errors: err.message });
+    console.log(err);
+    return;
+  }
+};
+
 exports.validators = {
   updateMeta: {
     work: { in: ["body"] },
@@ -81,5 +98,8 @@ exports.validators = {
       in: ["query"],
       isArray: true,
     },
+  },
+  followUser: {
+    username: { in: ["body"], errorMessage: "username is required" },
   },
 };
