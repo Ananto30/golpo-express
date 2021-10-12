@@ -27,4 +27,10 @@ router.post(
   chatController.sendMessage
 );
 
+router.put(
+  "/:receiver/:chatId/seen",
+  tokenMiddleware.checkToken,
+  chatController.chatSeen
+);
+
 module.exports = router;
