@@ -26,19 +26,34 @@ exports.updateUser = async (username, updateInfo) => {
   if (updateInfo.google_token)
     updates["google_token"] = updateInfo.google_token;
 
-  const userInfo = await User.findOneAndUpdate({username: username}, updates, {
-    new: true,
-  });
+  const userInfo = await User.findOneAndUpdate(
+    { username: username },
+    updates,
+    { new: true }
+  );
 
   return userInfo;
 };
 
+exports.followUser = async (username, usernameToFollow) => {
+  await User.findOneAndUpdate(
+    { username: usernameToFollow },
+    { $addToSet: { followers: username } }
+  );
+  const userInfo = await User.findOneAndUpdate(
+    { username: username },
+    { $addToSet: { following: usernameToFollow } },
+    { new: true }
+  );
+  return userInfo;
+};
+
 exports.getAllUsers = async () => {
-  return  await UserInfo.find({});
+  return await UserInfo.find({});
 };
 
 exports.getUserMeta = async (username) => {
-  return await UserInfo.findOne({username: username});
+  return await UserInfo.findOne({ username: username });
 };
 
 exports.createUserMeta = async (data) => {
@@ -51,9 +66,11 @@ exports.updateUserMeta = async (username, updateInfo) => {
   if (updateInfo.tagline) updates["tagline"] = updateInfo.tagline;
   if (updateInfo.image) updates["image"] = updateInfo.image;
 
-  const userInfo = await UserInfo.findOneAndUpdate({username: username}, updates, {
-    new: true,
-  });
+  const userInfo = await UserInfo.findOneAndUpdate(
+    { username: username },
+    updates,
+    { new: true }
+  );
 
   await metaUpdateActivity(username, updateInfo);
 
@@ -62,7 +79,7 @@ exports.updateUserMeta = async (username, updateInfo) => {
 
 exports.getUsersMeta = async (usernames) => {
   return await UserInfo.find({
-    username: {$in: usernames},
+    username: { $in: usernames },
   });
 };
 
