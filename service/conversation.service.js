@@ -1,4 +1,5 @@
 const ConversationModel = require("../model/conversation.model");
+const mongoose = require('mongoose');
 const Conversation = ConversationModel.Conversation;
 
 exports.getChatListAndLastChatForUser = async (username) => {
@@ -60,3 +61,33 @@ exports.sendMessage = async (sender, receiver, text) => {
 
   return true;
 };
+
+exports.chatSeen = async (sender, receiver, chatId) => {
+  if (!mongoose.Types.ObjectId.isValid(chatId))
+    return {
+      errors: [
+        {
+          msg: "User not found",
+          status: "404",
+        },
+      ],
+    };
+  const chats = await Conversation.findOneAndUpdate(
+    {
+      participants: [sender, receiver],
+      "chats._id": chatId,
+    },
+    { "chats.$.seen": true },
+    { new: true }
+  );
+
+  if (!chats || chats.length === 0) {
+    return {
+      participants: [sender, receiver],
+      chats: [],
+    }
+  }
+  return chats;
+};
+
+

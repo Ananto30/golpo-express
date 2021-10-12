@@ -62,6 +62,20 @@ exports.sendMessage = async (req, res) => {
   }
 };
 
+exports.chatSeen = async (req, res) => {
+  try {
+    const { receiver, chatId } = req.params;
+    const { username } = req.decoded;
+
+    const post = await chatService.chatSeen(username, receiver, chatId);
+    res.status(200).json(post);
+  } catch (err) {
+    res.status(500).json({ errors: err.message });
+    console.log(err);
+    return;
+  }
+};
+
 exports.validators = {
   sendChat: {
     receiver: {
