@@ -5,6 +5,8 @@ const userSchema = new Schema(
   {
     username: String,
     password: String,
+    followers: [String],
+    following: [String],
     created_at: Date,
     updated_at: { type: Date, default: Date.now },
     last_login_at: { type: Date, default: Date.now },

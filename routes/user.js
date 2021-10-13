@@ -33,4 +33,11 @@ router.get(
   userController.getUserMetaByUsername
 );
 
+router.post(
+  "/follow",
+  tokenMiddleware.checkToken,
+  validateSchema(userController.validators.followUser),
+  userController.followUser
+);
+
 module.exports = router;
