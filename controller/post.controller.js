@@ -5,7 +5,14 @@ exports.getAll = async (req, res) => {
   // Tags in query params
   const tags = req.query.tags.split(",");
   try {
-    const posts = await postService.getAllPosts(tags);
+    let posts;
+    // Filter by tags if provided
+    if (!!tags && tags.length > 0) {
+      posts = await postService.getAllPostsByTags(tags);
+     }
+    else {
+      posts = await postService.getAllPosts();
+    }
     posts.forEach(function (post) {
       post.isLovedByMe = false;
       post.loves.forEach(function (love) {

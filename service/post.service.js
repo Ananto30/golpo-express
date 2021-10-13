@@ -5,58 +5,28 @@ const activityService = require("./activity.service");
 const notificationService = require("./notification.service");
 const { getLinkPreview } = require("link-preview-js");
 
-exports.getAllPosts = async (tags) => {
-  let posts;
-  // Filter by tags if provided
-  if (!!tags && tags.length > 0) {
-    posts = await Post.aggregate([
-      {
-        $match: {
-          tags: { $in: tags },
-        },
+exports.getAllPosts = async () => {
+  const posts = await Post.aggregate([
+    { $match: {} },
+    {
+      $project: {
+        author: 1,
+        text: 1,
+        date: 1,
+        url: 1,
+        title: 1,
+        loves: 1,
+        description: 1,
+        image: 1,
+        site_name: 1,
+        favicon: 1,
+        created_at: 1,
+        commentCount: { $size: "$comments" },
+        loveCount: { $size: "$loves" },
+        tags: 1,
       },
-      {
-        $project: {
-          author: 1,
-          text: 1,
-          date: 1,
-          url: 1,
-          title: 1,
-          loves: 1,
-          description: 1,
-          image: 1,
-          site_name: 1,
-          favicon: 1,
-          created_at: 1,
-          commentCount: { $size: "$comments" },
-          loveCount: { $size: "$loves" },
-          tags: 1,
-        },
-      },
-    ]).exec();
-  } else {
-    posts = await Post.aggregate([
-      { $match: {} },
-      {
-        $project: {
-          author: 1,
-          text: 1,
-          date: 1,
-          url: 1,
-          title: 1,
-          loves: 1,
-          description: 1,
-          image: 1,
-          site_name: 1,
-          favicon: 1,
-          created_at: 1,
-          commentCount: { $size: "$comments" },
-          loveCount: { $size: "$loves" },
-          tags: 1,
-        },
-      },
-    ]).exec();
-  }
+    },
+  ]).exec();
 
   return posts;
 };
@@ -65,6 +35,37 @@ exports.getPostById = async (id) => {
   return await Post.findOne({
     _id: id,
   });
+};
+
+exports.getAllPostsByTags = async (tags) => {
+  // Filter by tags if provided
+  const posts = await Post.aggregate([
+    {
+      $match: {
+        tags: { $in: tags },
+      },
+    },
+    {
+      $project: {
+        author: 1,
+        text: 1,
+        date: 1,
+        url: 1,
+        title: 1,
+        loves: 1,
+        description: 1,
+        image: 1,
+        site_name: 1,
+        favicon: 1,
+        created_at: 1,
+        commentCount: { $size: "$comments" },
+        loveCount: { $size: "$loves" },
+        tags: 1,
+      },
+    },
+  ]).exec();
+
+  return posts;
 };
 
 exports.createPost = async (author, url, tags) => {
