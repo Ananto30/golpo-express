@@ -74,12 +74,15 @@ exports.followUser = async (req, res) => {
   try {
     const { username } = req.decoded;
     const userToFollow = await userService.getUserMeta(req.body.username);
-    const userMeta = await userService.followUser(
-      username,
-      userToFollow.username
-    );
-
-    res.status(200).send();
+    if (userToFollow.username) {
+      const userMeta = await userService.followUser(
+        username,
+        userToFollow.username
+      );
+      res.status(200).send();
+    } else {
+      res.status(400).send("User doesn't exists");
+    }
   } catch (err) {
     res.status(500).json({ errors: err.message });
     console.log(err);
