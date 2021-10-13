@@ -2,8 +2,10 @@ const { tags, adultURLs } = require("../constants");
 const postService = require("../service/post.service");
 
 exports.getAll = async (req, res) => {
+  // Tags in query params
+  const tags = req.query.tags.split(",");
   try {
-    const posts = await postService.getAllPosts();
+    const posts = await postService.getAllPosts(tags);
     posts.forEach(function (post) {
       post.isLovedByMe = false;
       post.loves.forEach(function (love) {
