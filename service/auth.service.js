@@ -40,7 +40,7 @@ exports.findOrCreateGoogleUserAndGenerateToken = async (data) => {
       google_picture: profileData.picture,
     };
     user = await userService.createUser(data);
-    await userService.createUserMeta({ username: user.username });
+    await userService.createUserMeta({ username: user.username, image: user.google_picture });
   }
 
   const token = jwt.sign({ username: user.username }, config.jwtSecret, {

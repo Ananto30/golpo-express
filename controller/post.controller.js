@@ -92,6 +92,13 @@ exports.getPostsByUsername = async (req, res) => {
   try {
     const { username } = req.params;
     const posts = await postService.getPostsByUsername(username);
+    posts.forEach(function (post) {
+      post.isLovedByMe = false;
+      post.loves.forEach(function (love) {
+        if (love.author === req.decoded.username)
+          return (post.isLovedByMe = true);
+      });
+    });
 
     res.status(200).json({ posts });
   } catch (err) {
