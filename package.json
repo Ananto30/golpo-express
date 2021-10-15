@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node ./src/bin/www",
     "heroku-postbuild": "cd client && npm install && npm run build",
-    "bootstrap": "node ./scripts/bootstrap.js"
+    "bootstrap": "node ./src/scripts/bootstrap.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
