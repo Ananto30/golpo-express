@@ -37,6 +37,37 @@ exports.getPostById = async (id) => {
   });
 };
 
+exports.getAllPostsByTags = async (tags) => {
+  // Filter by tags if provided
+  const posts = await Post.aggregate([
+    {
+      $match: {
+        tags: { $in: tags },
+      },
+    },
+    {
+      $project: {
+        author: 1,
+        text: 1,
+        date: 1,
+        url: 1,
+        title: 1,
+        loves: 1,
+        description: 1,
+        image: 1,
+        site_name: 1,
+        favicon: 1,
+        created_at: 1,
+        commentCount: { $size: "$comments" },
+        loveCount: { $size: "$loves" },
+        tags: 1,
+      },
+    },
+  ]).exec();
+
+  return posts;
+};
+
 exports.createPost = async (author, url, tags) => {
   const metadata = await extractUrlMetadata(url);
 
