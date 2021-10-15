@@ -2,15 +2,13 @@ const { tags, adultURLs } = require("../constants");
 const postService = require("../service/post.service");
 
 exports.getAll = async (req, res) => {
-  // Tags in query params
-  const tags = req.query.tags.split(",");
+  const tags = req.query.tags;
   try {
     let posts;
     // Filter by tags if provided
     if (!!tags && tags.length > 0) {
-      posts = await postService.getAllPostsByTags(tags);
-     }
-    else {
+      posts = await postService.getAllPostsByTags(tags.split(","));
+    } else {
       posts = await postService.getAllPosts();
     }
     posts.forEach(function (post) {
