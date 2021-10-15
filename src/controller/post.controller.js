@@ -2,15 +2,13 @@ const { tags, adultURLs } = require("../constants");
 const postService = require("../service/post.service");
 
 exports.getAll = async (req, res) => {
-  // Tags in query params
-  const tags = req.query.tags.split(",");
+  const tags = req.query.tags;
   try {
     let posts;
     // Filter by tags if provided
     if (!!tags && tags.length > 0) {
-      posts = await postService.getAllPostsByTags(tags);
-     }
-    else {
+      posts = await postService.getAllPostsByTags(tags.split(","));
+    } else {
       posts = await postService.getAllPosts();
     }
     posts.forEach(function (post) {
@@ -92,6 +90,13 @@ exports.getPostsByUsername = async (req, res) => {
   try {
     const { username } = req.params;
     const posts = await postService.getPostsByUsername(username);
+    posts.forEach(function (post) {
+      post.isLovedByMe = false;
+      post.loves.forEach(function (love) {
+        if (love.author === req.decoded.username)
+          return (post.isLovedByMe = true);
+      });
+    });
 
     res.status(200).json({ posts });
   } catch (err) {
