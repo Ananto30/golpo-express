@@ -1,5 +1,7 @@
 const PostModel = require("../model/post.model");
 const Post = PostModel.Post;
+const BookmarkPostModel = require("../model/bookmark.model");
+const BookmarkPost = BookmarkPostModel.BookmarkPost;
 
 const activityService = require("./activity.service");
 const notificationService = require("./notification.service");
@@ -201,4 +203,37 @@ exports.deletePost = async (id, username) => {
     author: username,
   });
   return true;
+};
+
+exports.checkIfBookmarked = async (postId, username) =>
+  await BookmarkPost.findOne({ post_ids: postId, username });
+
+exports.bookmarkPost = async (postId, username) => {
+  const previouslyBookmarkedPosts = await BookmarkPost.findOne({ username });
+
+  // if user previously has bookmarks just update
+  if (previouslyBookmarkedPosts) {
+    return await BookmarkPost.findOneAndUpdate(
+      { username },
+      { $push: { post_ids: postId } },
+      { new: true }
+    );
+  }
+
+  // if its the user first bookmark create
+  const bookmarkData = {
+    post_ids: [postId],
+    username,
+  };
+  return await BookmarkPost.create(bookmarkData);
+};
+
+exports.bookmarks = async (username) => {
+  const bookmark = await BookmarkPost.findOne({ username });
+  let userBookmarkedPosts = [];
+  for (let i = 0; i < bookmark.post_ids.length; i++) {
+    const post = await Post.findById(bookmark.post_ids[i]);
+    userBookmarkedPosts.push(post);
+  }
+  return userBookmarkedPosts;
 };

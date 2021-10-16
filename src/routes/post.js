@@ -6,6 +6,7 @@ const tokenMiddleware = require("../middleware/token");
 const validateSchema = require("../middleware/validate");
 
 router.get("/tags", postController.getAllTags);
+router.get("/bookmarks", tokenMiddleware.checkToken, postController.bookmarks);
 router.get("/", tokenMiddleware.checkToken, postController.getAll);
 router.get("/:id", tokenMiddleware.checkToken, postController.getById);
 
@@ -33,6 +34,12 @@ router.post(
   "/:postId/love",
   tokenMiddleware.checkToken,
   postController.reactLove
+);
+
+router.post(
+  "/:postId/bookmark",
+  tokenMiddleware.checkToken,
+  postController.bookmarkPost
 );
 
 router.get(
