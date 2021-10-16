@@ -30,14 +30,19 @@ router.post(
 router.get(
   "/:username",
   tokenMiddleware.checkToken,
-  userController.getUserMetaByUsername
+  userController.getUserDetails
 );
 
 router.post(
-  "/follow",
+  "/:username/follow",
   tokenMiddleware.checkToken,
-  validateSchema(userController.validators.followUser),
   userController.followUser
+);
+
+router.post(
+  "/:username/unfollow",
+  tokenMiddleware.checkToken,
+  userController.unFollowUser
 );
 
 module.exports = router;

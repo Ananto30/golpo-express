@@ -105,7 +105,7 @@ exports.createComment = async (author, text, postId) => {
         comments: {
           author: author,
           text: text,
-          date: new Date(),
+          created_at: new Date(),
         },
       },
     },
@@ -193,4 +193,12 @@ exports.getPostsByUsername = async (username) => {
 const extractUrlMetadata = async (url) => {
   const metadata = await getLinkPreview(url);
   return metadata;
+};
+
+exports.deletePost = async (id, username) => {
+  await Post.findOneAndDelete({
+    _id: id,
+    author: username,
+  });
+  return true;
 };

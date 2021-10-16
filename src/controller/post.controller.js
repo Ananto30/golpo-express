@@ -31,6 +31,12 @@ exports.getById = async (req, res) => {
     const { id } = req.params;
     const post = await postService.getPostById(id);
 
+    post.isLovedByMe = false;
+    post.loves.forEach(function (love) {
+      if (love.author === req.decoded.username)
+        return (post.isLovedByMe = true);
+    });
+
     res.status(200).json(post);
   } catch (err) {
     res.status(500).json({ errors: err.message });
@@ -150,4 +156,19 @@ exports.validators = {
 
 exports.getAllTags = (req, res) => {
   res.status(200).json({ tags });
+};
+
+exports.deletePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { username } = req.decoded;
+
+    const deleted = await postService.deletePost(id, username);
+
+    res.status(200).json(deleted);
+  } catch (err) {
+    res.status(500).json({ errors: err.message });
+    console.log(err);
+    return;
+  }
 };

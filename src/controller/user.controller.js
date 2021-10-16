@@ -72,17 +72,54 @@ exports.getUsersMeta = async (req, res) => {
 
 exports.followUser = async (req, res) => {
   try {
-    const { username } = req.decoded;
-    const userToFollow = await userService.getUserMeta(req.body.username);
-    if (userToFollow.username) {
-      const userMeta = await userService.followUser(
-        username,
-        userToFollow.username
-      );
+    const { username } = req.params;
+
+    const userToFollow = await userService.getUserMeta(username);
+    if (userToFollow) {
+      await userService.followUser(req.decoded.username, userToFollow.username);
       res.status(200).send();
     } else {
       res.status(400).send("User doesn't exists");
     }
+  } catch (err) {
+    res.status(500).json({ errors: err.message });
+    console.log(err);
+    return;
+  }
+};
+
+exports.unFollowUser = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    await userService.unFollowUser(req.decoded.username, username);
+    res.status(200).send();
+  } catch (err) {
+    res.status(500).json({ errors: err.message });
+    console.log(err);
+    return;
+  }
+};
+
+exports.getUserDetails = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    const user = await userService.getUserByUsername(username);
+    if (!user) {
+      res.status(400).send("User doesn't exists");
+    }
+    const userMeta = await userService.getUserMeta(username);
+    data = {
+      username: user.username,
+      followers: user.followers,
+      following: user.following,
+      google_name: user.google_name,
+      tagline: userMeta.tagline,
+      work: userMeta.work,
+      image: userMeta.image,
+    };
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ errors: err.message });
     console.log(err);

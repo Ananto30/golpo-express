@@ -17,6 +17,12 @@ exports.getUserByGoogleMail = async (email) => {
   });
 };
 
+exports.getUserByUsername = async (username) => {
+  return await User.findOne({
+    username: username,
+  });
+};
+
 exports.createUser = async (data) => {
   return await User.create(data);
 };
@@ -40,12 +46,22 @@ exports.followUser = async (username, usernameToFollow) => {
     { username: usernameToFollow },
     { $addToSet: { followers: username } }
   );
-  const userInfo = await User.findOneAndUpdate(
+  await User.findOneAndUpdate(
     { username: username },
     { $addToSet: { following: usernameToFollow } },
     { new: true }
   );
-  return userInfo;
+};
+
+exports.unFollowUser = async (username, usernameToUnFollow) => {
+  await User.findOneAndUpdate(
+    { username: usernameToUnFollow },
+    { $pull: { followers: username } }
+  );
+  await User.findOneAndUpdate(
+    { username: username },
+    { $pull: { following: usernameToUnFollow } }
+  );
 };
 
 exports.getAllUsers = async () => {
