@@ -74,11 +74,6 @@ exports.getAllPostsByTags = async (tags) => {
 
 exports.createPost = async (author, url, tags) => {
 
-  const user = await userService.getUserByUsername(author);
-  if (!user) {
-    user = {};
-  }
-
   const userMeta = await userService.getUserMeta(author);
   if (!userMeta) {
     userMeta = {};
@@ -92,7 +87,7 @@ exports.createPost = async (author, url, tags) => {
     title: metadata.title,
     description: metadata.description,
     image: metadata.images[0],
-    author_image: userMeta.image || user.google_picture || '',
+    author_image: userMeta.image || '',
     site_name: metadata.siteName,
     favicon: metadata.favicons[0],
     created_at: new Date(),
