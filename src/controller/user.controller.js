@@ -1,5 +1,3 @@
-const { body, query, validationResult } = require("express-validator");
-
 const userService = require("../service/user.service");
 
 exports.getAllUsers = async (req, res) => {

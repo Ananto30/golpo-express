@@ -1,11 +1,8 @@
-const { body, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
 
 const UserModel = require("../model/user.model");
-const User = UserModel.User;
 
-const activityService = require("./activity.service");
 const userService = require("./user.service");
 
 exports.verifyUserAndGenerateToken = async (username, password) => {
@@ -40,7 +37,10 @@ exports.findOrCreateGoogleUserAndGenerateToken = async (data) => {
       google_picture: profileData.picture,
     };
     user = await userService.createUser(data);
-    await userService.createUserMeta({ username: user.username, image: user.google_picture });
+    await userService.createUserMeta({
+      username: user.username,
+      image: user.google_picture,
+    });
   }
 
   const token = jwt.sign({ username: user.username }, config.jwtSecret, {

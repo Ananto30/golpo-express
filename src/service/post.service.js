@@ -74,7 +74,7 @@ exports.getAllPostsByTags = async (tags) => {
 };
 
 exports.createPost = async (author, url, tags) => {
-  const userMeta = await userService.getUserMeta(author);
+  let userMeta = await userService.getUserMeta(author);
   if (!userMeta) {
     userMeta = {};
   }
