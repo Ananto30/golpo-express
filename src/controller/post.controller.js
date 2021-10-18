@@ -212,3 +212,14 @@ exports.bookmarks = async (req, res) => {
     return;
   }
 };
+
+exports.getUserFeedPosts = async (req, res) => {
+  try {
+    const feedPosts = await postService.getUserFeedPosts(req.decoded.username);
+    res.status(200).json({ feedPosts });
+  } catch (err) {
+    res.status(500).json({ errors: err.message });
+    console.log(err);
+    return;
+  }
+};

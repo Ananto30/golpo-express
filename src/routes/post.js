@@ -7,7 +7,13 @@ const validateSchema = require("../middleware/validate");
 
 router.get("/tags", postController.getAllTags);
 router.get("/bookmarks", tokenMiddleware.checkToken, postController.bookmarks);
+router.get(
+  "/feed",
+  tokenMiddleware.checkToken,
+  postController.getUserFeedPosts
+);
 router.get("/", tokenMiddleware.checkToken, postController.getAll);
+
 router.get("/:id", tokenMiddleware.checkToken, postController.getById);
 
 router.post(

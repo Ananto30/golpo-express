@@ -3,6 +3,7 @@ const Post = PostModel.Post;
 const BookmarkPostModel = require("../model/bookmark.model");
 const BookmarkPost = BookmarkPostModel.BookmarkPost;
 
+const userService = require("./user.service");
 const activityService = require("./activity.service");
 const notificationService = require("./notification.service");
 const { getLinkPreview } = require("link-preview-js");
@@ -22,6 +23,7 @@ exports.getAllPosts = async () => {
         image: 1,
         site_name: 1,
         favicon: 1,
+        author_image: 1,
         created_at: 1,
         commentCount: { $size: "$comments" },
         loveCount: { $size: "$loves" },
@@ -57,6 +59,7 @@ exports.getAllPostsByTags = async (tags) => {
         loves: 1,
         description: 1,
         image: 1,
+        author_image: 1,
         site_name: 1,
         favicon: 1,
         created_at: 1,
@@ -71,6 +74,11 @@ exports.getAllPostsByTags = async (tags) => {
 };
 
 exports.createPost = async (author, url, tags) => {
+  const userMeta = await userService.getUserMeta(author);
+  if (!userMeta) {
+    userMeta = {};
+  }
+
   const metadata = await extractUrlMetadata(url);
 
   const post = await Post.create({
@@ -79,6 +87,7 @@ exports.createPost = async (author, url, tags) => {
     title: metadata.title,
     description: metadata.description,
     image: metadata.images[0],
+    author_image: userMeta.image || "",
     site_name: metadata.siteName,
     favicon: metadata.favicons[0],
     created_at: new Date(),
@@ -180,6 +189,7 @@ exports.getPostsByUsername = async (username) => {
         loves: 1,
         description: 1,
         image: 1,
+        author_image: 1,
         site_name: 1,
         favicon: 1,
         created_at: 1,
@@ -236,4 +246,27 @@ exports.bookmarks = async (username) => {
     userBookmarkedPosts.push(post);
   }
   return userBookmarkedPosts;
+};
+
+exports.getUserFeedPosts = async (username) => {
+  let feedPosts = [];
+  const user = await userService.getUserByUsername(username);
+  if (user && user.following.length > 0) {
+    const post = await Post.find({ author: { $in: user.following } });
+    feedPosts = [...feedPosts, ...post];
+
+    if (feedPosts.length < 50) {
+      const morePosts = await Post.find({ author: { $nin: user.following } });
+      feedPosts = [...feedPosts, ...morePosts];
+    }
+
+    const sortedPosts = feedPosts.sort(
+      (firstEl, secondEl) =>
+        new Date(secondEl.created_at) - new Date(firstEl.created_at)
+    );
+
+    return sortedPosts;
+  }
+
+  return await Post.find().sort({ created_at: -1 }).exec();
 };
