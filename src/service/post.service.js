@@ -2,7 +2,6 @@ const PostModel = require("../model/post.model");
 const Post = PostModel.Post;
 const BookmarkPostModel = require("../model/bookmark.model");
 const BookmarkPost = BookmarkPostModel.BookmarkPost;
-const userService = require("./user.service");
 const activityService = require("./activity.service");
 const notificationService = require("./notification.service");
 const { getLinkPreview } = require("link-preview-js");
