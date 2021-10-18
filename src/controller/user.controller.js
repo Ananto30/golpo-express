@@ -1,5 +1,3 @@
-const { body, query, validationResult } = require("express-validator");
-
 const userService = require("../service/user.service");
 
 exports.getAllUsers = async (req, res) => {
@@ -58,7 +56,7 @@ exports.updateMeta = async (req, res) => {
 
 exports.getUsersMeta = async (req, res) => {
   try {
-    const { usernames } = req.query;
+    const { usernames } = req.body;
 
     const usersMeta = await userService.getUsersMeta(usernames);
 
@@ -110,11 +108,11 @@ exports.getUserDetails = async (req, res) => {
       res.status(400).send("User doesn't exists");
     }
     const userMeta = await userService.getUserMeta(username);
-    data = {
+    let data = {
       username: user.username,
       followers: user.followers,
       following: user.following,
-      google_name: user.google_name,
+      display_name: userMeta.display_name,
       tagline: userMeta.tagline,
       work: userMeta.work,
       image: userMeta.image,
@@ -127,6 +125,35 @@ exports.getUserDetails = async (req, res) => {
   }
 };
 
+exports.getFollowers = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    const followers = await userService.getFollowers(username);
+
+    res.status(200).json({ users: followers });
+  } catch (err) {
+    res.status(500).json({ errors: err.message });
+    console.log(err);
+    return;
+  }
+};
+
+exports.getFollowing = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    const following = await userService.getFollowing(username);
+
+    res.status(200).json({ users: following });
+  } catch (err) {
+    res.status(500).json({ errors: err.message });
+    console.log(err);
+    return;
+  }
+};
+
+
 exports.validators = {
   updateMeta: {
     work: { in: ["body"] },
@@ -135,7 +162,7 @@ exports.validators = {
   },
   getUsersMeta: {
     usernames: {
-      in: ["query"],
+      in: ["body"],
       isArray: true,
     },
   },

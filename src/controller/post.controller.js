@@ -125,6 +125,65 @@ exports.getPostsByToken = async (req, res) => {
   }
 };
 
+exports.getAllTags = (req, res) => {
+  res.status(200).json({ tags });
+};
+
+exports.deletePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { username } = req.decoded;
+
+    const deleted = await postService.deletePost(id, username);
+
+    res.status(200).json(deleted);
+  } catch (err) {
+    res.status(500).json({ errors: err.message });
+    console.log(err);
+    return;
+  }
+};
+
+exports.bookmarkPost = async (req, res) => {
+  try {
+    const { username } = req.decoded;
+    const { postId } = req.params;
+
+    const checkIfPreviouslyBookmarked = await postService.checkIfBookmarked(
+      postId,
+      username
+    );
+
+    if (checkIfPreviouslyBookmarked) {
+      res.status(404).json({ errors: "post already bookmarked" });
+      return;
+    }
+
+    const verifyPost = await postService.getPostById(postId);
+    if (!verifyPost) res.status(404).json({ errors: "post not found" });
+
+    const bookmarkedpost = await postService.bookmarkPost(postId, username);
+
+    res.status(200).json({ bookmarkedpost });
+  } catch (err) {
+    res.status(500).json({ errors: err.message });
+    console.log(err);
+    return;
+  }
+};
+
+exports.bookmarks = async (req, res) => {
+  try {
+    const { username } = req.decoded;
+    const bookmarks = await postService.bookmarks(username);
+    res.status(200).json({ bookmarks });
+  } catch (err) {
+    res.status(500).json({ errors: err.message });
+    console.log(err);
+    return;
+  }
+};
+
 exports.validators = {
   validateComment: {
     text: {
@@ -223,3 +282,4 @@ exports.getUserFeedPosts = async (req, res) => {
     return;
   }
 };
+
