@@ -1,5 +1,3 @@
-const { body, query, validationResult } = require("express-validator");
-
 const userService = require("../service/user.service");
 
 exports.getAllUsers = async (req, res) => {
@@ -110,7 +108,7 @@ exports.getUserDetails = async (req, res) => {
       res.status(400).send("User doesn't exists");
     }
     const userMeta = await userService.getUserMeta(username);
-    data = {
+    let data = {
       username: user.username,
       followers: user.followers,
       following: user.following,

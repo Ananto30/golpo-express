@@ -1,11 +1,6 @@
-const { body, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
 
-const UserModel = require("../model/user.model");
-const User = UserModel.User;
-
-const activityService = require("./activity.service");
 const userService = require("./user.service");
 
 exports.verifyUserAndGenerateToken = async (username, password) => {

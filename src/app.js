@@ -28,8 +28,9 @@ function requireHTTPS(req, res, next) {
   next();
 }
 
-// localhost doesn't need this, TODO: need to start server with env type
-// app.use(requireHTTPS);
+if (process.env.NODE_ENV == "production") {
+  app.use(requireHTTPS);
+}
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -58,8 +59,9 @@ app.use("/api/activity", activityRouter);
 app.use("/api/notification", notificationRouter);
 
 // The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
+// match one above, send back Svelte's index.html file.
 app.get("*", (req, res) => {
+  // lgtm [js/missing-rate-limiting]
   res.sendFile(path.join(__dirname + "/../public/index.html"));
 });
 

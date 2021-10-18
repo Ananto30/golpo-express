@@ -12,15 +12,15 @@ const mongooseConnectOptions = {
 mongoose.connect(config.mongoUrl, mongooseConnectOptions);
 
 void (async function () {
-  data = {
+  let data = {
     username: "test",
     password: "test",
   };
-  user = await userService.getUserByUsernameAndPass("test", "test");
+  let user = await userService.getUserByUsernameAndPass("test", "test");
   if (!user) {
     user = await userService.createUser(data);
     console.log(user);
-    meta = await userService.createUserMeta({ username: user.username });
+    let meta = await userService.createUserMeta({ username: user.username });
     console.log(meta);
   }
   data = {
@@ -31,7 +31,7 @@ void (async function () {
   if (!user) {
     user = await userService.createUser(data);
     console.log(user);
-    meta = await userService.createUserMeta({ username: user.username });
+    let meta = await userService.createUserMeta({ username: user.username });
     console.log(meta);
   }
   data = {
@@ -42,7 +42,7 @@ void (async function () {
   if (!user) {
     user = await userService.createUser(data);
     console.log(user);
-    meta = await userService.createUserMeta({ username: user.username });
+    let meta = await userService.createUserMeta({ username: user.username });
     console.log(meta);
   }
 

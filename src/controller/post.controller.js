@@ -125,35 +125,6 @@ exports.getPostsByToken = async (req, res) => {
   }
 };
 
-exports.validators = {
-  validateComment: {
-    text: {
-      isLength: {
-        errorMessage: "test should be between 1 and 100 characters",
-        options: { min: 1, max: 100 },
-      },
-    },
-  },
-
-  validateUrl: {
-    url: {
-      isUrl: {
-        errorMessage: "Must be a Valid URL",
-        options: {
-          protocols: ["http", "https", "ftp"],
-          require_tld: true,
-          require_protocol: true,
-        },
-      },
-      isIn: {
-        negated: true,
-        options: adultURLs,
-        errorMessage: "Adult contents are not allowed",
-      },
-    },
-  },
-};
-
 exports.getAllTags = (req, res) => {
   res.status(200).json({ tags });
 };
@@ -211,4 +182,33 @@ exports.bookmarks = async (req, res) => {
     console.log(err);
     return;
   }
+};
+
+exports.validators = {
+  validateComment: {
+    text: {
+      isLength: {
+        errorMessage: "test should be between 1 and 100 characters",
+        options: { min: 1, max: 100 },
+      },
+    },
+  },
+
+  validateUrl: {
+    url: {
+      isUrl: {
+        errorMessage: "Must be a Valid URL",
+        options: {
+          protocols: ["http", "https", "ftp"],
+          require_tld: true,
+          require_protocol: true,
+        },
+      },
+      isIn: {
+        negated: true,
+        options: adultURLs,
+        errorMessage: "Adult contents are not allowed",
+      },
+    },
+  },
 };
