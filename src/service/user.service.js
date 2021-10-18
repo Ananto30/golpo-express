@@ -81,6 +81,8 @@ exports.updateUserMeta = async (username, updateInfo) => {
   if (updateInfo.work) updates["work"] = updateInfo.work;
   if (updateInfo.tagline) updates["tagline"] = updateInfo.tagline;
   if (updateInfo.image) updates["image"] = updateInfo.image;
+  if (updateInfo.display_name)
+    updates["display_name"] = updateInfo.display_name;
 
   const userInfo = await UserInfo.findOneAndUpdate(
     { username: username },
@@ -96,6 +98,22 @@ exports.updateUserMeta = async (username, updateInfo) => {
 exports.getUsersMeta = async (usernames) => {
   return await UserInfo.find({
     username: { $in: usernames },
+  });
+};
+
+exports.getFollowers = async (username) => {
+  const user = await User.findOne({ username: username });
+
+  return await UserInfo.find({
+    username: { $in: user.followers },
+  });
+};
+
+exports.getFollowing = async (username) => {
+  const user = await User.findOne({ username: username });
+
+  return await UserInfo.find({
+    username: { $in: user.following },
   });
 };
 

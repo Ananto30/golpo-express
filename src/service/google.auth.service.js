@@ -44,6 +44,12 @@ exports.getTokenByGoogleCode = async (code) => {
     await userService.createUserMeta({
       username: user.username,
       image: user.google_picture,
+      display_name: user.google_name,
+    });
+  } else {
+    await userService.updateUserMeta(user.username, {
+      image: user.google_picture,
+      display_name: user.google_name,
     });
   }
 

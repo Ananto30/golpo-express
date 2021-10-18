@@ -27,6 +27,7 @@ const userInfoSchema = new Schema(
     tagline: String,
     work: String,
     image: String,
+    display_name: String,
   },
   { collection: "userinfo" } // TODO: should be removed, need to fix mongo model
 );

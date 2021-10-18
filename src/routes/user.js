@@ -13,8 +13,8 @@ router.get(
   userController.getUserMetaByToken
 );
 
-router.get(
-  "/usersmeta",
+router.post(
+  "/get_users_meta",
   tokenMiddleware.checkToken,
   validateSchema(userController.validators.getUsersMeta),
   userController.getUsersMeta
@@ -43,6 +43,18 @@ router.post(
   "/:username/unfollow",
   tokenMiddleware.checkToken,
   userController.unFollowUser
+);
+
+router.get(
+  "/:username/followers",
+  tokenMiddleware.checkToken,
+  userController.getFollowers
+);
+
+router.get(
+  "/:username/following",
+  tokenMiddleware.checkToken,
+  userController.getFollowing
 );
 
 module.exports = router;
