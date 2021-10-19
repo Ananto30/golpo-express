@@ -1,5 +1,8 @@
 # Golpo Express
 
+[![DeepScan grade](https://deepscan.io/api/teams/15735/projects/18961/branches/477973/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=15735&pid=18961&bid=477973)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/Ananto30/golpo-express.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Ananto30/golpo-express/context:javascript)
+
 This is the Express (Node.js) backend of the current [golpo project](https://github.com/Ananto30/golpo). Old app - [golpo13.herokuapp.com](http://golpo13.herokuapp.com/) New app - [golpo2.herokuapp.com](https://golpo2.herokuapp.com)
 
 But there are things we are changing from the current Golpo. We will use Golpo as a link sharing platform. And it will be free for eveyone! Future plan involves link management (collection of links and sorting) and sharing collection.
