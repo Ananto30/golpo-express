@@ -42,11 +42,15 @@ exports.notificationClicked = async (req, res) => {
 
     const notification = await notificationService.findOneNotificationById(id);
 
-    if (!notification)
-      res.status(404).json({ errors: "notification not found" });
+    if (!notification) {
+      res.status(404).json({ errors: "Notification not found" });
+      return;
+    }
 
-    if (notification.comment_author !== username)
-      res.status(405).json({ errors: "not allowed" });
+    if (notification.comment_author !== username) {
+      res.status(405).json({ errors: "Not allowed" });
+      return;
+    }
 
     const clickedNotification = await notificationService.notificationClicked(
       id

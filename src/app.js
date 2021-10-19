@@ -60,8 +60,7 @@ app.use("/api/notification", notificationRouter);
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back Svelte's index.html file.
-app.get("*", (req, res) => {
-  // lgtm [js/missing-rate-limiting]
+app.get("*", (req, res) => {  // lgtm [js/missing-rate-limiting]
   res.sendFile(path.join(__dirname + "/../public/index.html"));
 });
 

@@ -6,7 +6,7 @@ const activityService = require("./activity.service");
 const notificationService = require("./notification.service");
 const { getLinkPreview } = require("link-preview-js");
 
-exports.getAllPosts = async () => {
+exports.getAllPosts = async (tokenUser) => {
   const posts = await Post.aggregate([
     { $match: {} },
     {
@@ -16,7 +16,6 @@ exports.getAllPosts = async () => {
         date: 1,
         url: 1,
         title: 1,
-        loves: 1,
         description: 1,
         image: 1,
         site_name: 1,
@@ -25,6 +24,9 @@ exports.getAllPosts = async () => {
         created_at: 1,
         commentCount: { $size: "$comments" },
         loveCount: { $size: "$loves" },
+        isLovedByMe: {
+          $in: [tokenUser, "$loves.author"],
+        },
         tags: 1,
       },
     },
@@ -39,8 +41,7 @@ exports.getPostById = async (id) => {
   });
 };
 
-exports.getAllPostsByTags = async (tags) => {
-  // Filter by tags if provided
+exports.getAllPostsByTags = async (tags, tokenUser) => {
   const posts = await Post.aggregate([
     {
       $match: {
@@ -63,6 +64,9 @@ exports.getAllPostsByTags = async (tags) => {
         created_at: 1,
         commentCount: { $size: "$comments" },
         loveCount: { $size: "$loves" },
+        isLovedByMe: {
+          $in: [tokenUser, "$loves.author"],
+        },
         tags: 1,
       },
     },
@@ -96,6 +100,11 @@ exports.createPost = async (author, url, tags) => {
   await activityService.createActivity(data);
 
   return post;
+};
+
+const extractUrlMetadata = async (url) => {
+  const metadata = await getLinkPreview(url);
+  return metadata;
 };
 
 exports.createComment = async (author, text, postId) => {
@@ -164,7 +173,7 @@ exports.reactLove = async (author, postId) => {
   return postUpdate;
 };
 
-exports.getPostsByUsername = async (username) => {
+exports.getPostsByUsername = async (username, tokenUser) => {
   const posts = await Post.aggregate([
     {
       $match: {
@@ -178,7 +187,6 @@ exports.getPostsByUsername = async (username) => {
         date: 1,
         url: 1,
         title: 1,
-        loves: 1,
         description: 1,
         image: 1,
         author_image: 1,
@@ -187,16 +195,14 @@ exports.getPostsByUsername = async (username) => {
         created_at: 1,
         commentCount: { $size: "$comments" },
         loveCount: { $size: "$loves" },
+        isLovedByMe: {
+          $in: [tokenUser, "$loves.author"],
+        },
         tags: 1,
       },
     },
   ]).exec();
   return posts;
-};
-
-const extractUrlMetadata = async (url) => {
-  const metadata = await getLinkPreview(url);
-  return metadata;
 };
 
 exports.deletePost = async (id, username) => {
@@ -232,10 +238,35 @@ exports.bookmarkPost = async (postId, username) => {
 
 exports.bookmarks = async (username) => {
   const bookmark = await BookmarkPost.findOne({ username });
-  let userBookmarkedPosts = [];
-  for (let i = 0; i < bookmark.post_ids.length; i++) {
-    const post = await Post.findById(bookmark.post_ids[i]);
-    userBookmarkedPosts.push(post);
-  }
+
+  const userBookmarkedPosts = await Post.aggregate([
+    {
+      $match: {
+        _id: { $in: bookmark.post_ids },
+      },
+    },
+    {
+      $project: {
+        author: 1,
+        text: 1,
+        date: 1,
+        url: 1,
+        title: 1,
+        description: 1,
+        image: 1,
+        author_image: 1,
+        site_name: 1,
+        favicon: 1,
+        created_at: 1,
+        commentCount: { $size: "$comments" },
+        loveCount: { $size: "$loves" },
+        isLovedByMe: {
+          $in: [username, "$loves.author"],
+        },
+        tags: 1,
+      },
+    },
+  ]).exec();
+
   return userBookmarkedPosts;
 };
