@@ -3,21 +3,16 @@ const postService = require("../service/post.service");
 
 exports.getAll = async (req, res) => {
   const tags = req.query.tags;
+  const tokenUser = req.decoded.username;
+
   try {
     let posts;
     // Filter by tags if provided
     if (!!tags && tags.length > 0) {
-      posts = await postService.getAllPostsByTags(tags.split(","));
+      posts = await postService.getAllPostsByTags(tags.split(","), tokenUser);
     } else {
-      posts = await postService.getAllPosts();
+      posts = await postService.getAllPosts(tokenUser);
     }
-    posts.forEach(function (post) {
-      post.isLovedByMe = false;
-      post.loves.forEach(function (love) {
-        if (love.author === req.decoded.username)
-          return (post.isLovedByMe = true);
-      });
-    });
     res.status(200).json({ posts: posts });
   } catch (err) {
     res.status(500).json({ errors: err.message });
@@ -29,12 +24,13 @@ exports.getAll = async (req, res) => {
 exports.getById = async (req, res) => {
   try {
     const { id } = req.params;
+    const tokenUser = req.decoded.username;
+
     const post = await postService.getPostById(id);
 
     post.isLovedByMe = false;
     post.loves.forEach(function (love) {
-      if (love.author === req.decoded.username)
-        return (post.isLovedByMe = true);
+      if (love.author === tokenUser) return (post.isLovedByMe = true);
     });
 
     res.status(200).json(post);
@@ -50,6 +46,13 @@ exports.createPost = async (req, res) => {
     const { url } = req.body;
     const { username } = req.decoded;
     const { tags } = req.body;
+
+    adultURLs.forEach((a) => {
+      if (url.includes(a)) {
+        res.status(400).json({ errors: "Adult content not allowed ⛔" });
+        return;
+      }
+    });
 
     const post = await postService.createPost(username, url, tags);
 
@@ -95,14 +98,9 @@ exports.reactLove = async (req, res) => {
 exports.getPostsByUsername = async (req, res) => {
   try {
     const { username } = req.params;
-    const posts = await postService.getPostsByUsername(username);
-    posts.forEach(function (post) {
-      post.isLovedByMe = false;
-      post.loves.forEach(function (love) {
-        if (love.author === req.decoded.username)
-          return (post.isLovedByMe = true);
-      });
-    });
+    const tokenUser = req.decoded.username;
+
+    const posts = await postService.getPostsByUsername(username, tokenUser);
 
     res.status(200).json({ posts });
   } catch (err) {
@@ -115,7 +113,7 @@ exports.getPostsByUsername = async (req, res) => {
 exports.getPostsByToken = async (req, res) => {
   try {
     const { username } = req.decoded;
-    const posts = await postService.getPostsByUsername(username);
+    const posts = await postService.getPostsByUsername(username, username);
 
     res.status(200).json({ posts });
   } catch (err) {
@@ -203,11 +201,6 @@ exports.validators = {
           require_tld: true,
           require_protocol: true,
         },
-      },
-      isIn: {
-        negated: true,
-        options: adultURLs,
-        errorMessage: "Adult contents are not allowed",
       },
     },
   },
