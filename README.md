@@ -3,28 +3,22 @@
 [![DeepScan grade](https://deepscan.io/api/teams/15735/projects/18961/branches/477973/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=15735&pid=18961&bid=477973)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/Ananto30/golpo-express.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Ananto30/golpo-express/context:javascript)
 
-This is the Express (Node.js) backend of the current [golpo project](https://github.com/Ananto30/golpo). Old app - [golpo13.herokuapp.com](http://golpo13.herokuapp.com/) New app - [golpo.dedsec.life](https://golpo.dedsec.life)
+This is the Express (Node.js) backend of the [golpo.dedsec.life](https://golpo.dedsec.life). It's a rebuild and lots of new features added on top of the old app - [golpo13.herokuapp.com](http://golpo13.herokuapp.com/)
 
-But there are things we are changing from the current Golpo. We will use Golpo as a link sharing platform. And it will be free for eveyone! Future plan involves link management (collection of links and sorting) and sharing collection.
+**Golpo is a link sharing platform without ads.**
 
-So here is our plan -
+But we would like to have people's opinion on what Golpo can have in future. Please share your thoughts and feature request **[here](https://github.com/Ananto30/golpo-express/discussions/categories/request-feature).**
 
-## Change plan
+This Hacktoberfest Golpo got a bump from the awesome contributors. Shoutout to top 5 (except me 😜) -
 
-### Backend
+[alammoiz](https://github.com/alammoiz), [ayeolakenny](https://github.com/ayeolakenny), [deepanshu2506](https://github.com/deepanshu2506), [sagarchoudhary96](https://github.com/sagarchoudhary96), [Blastoise](https://github.com/Blastoise) 🙌 🚀
 
-*   Verify post is only a link.
-*   Extract meta data from link and save them in the database.
+## Remaining tasks
+
 *   Do not allow to share the same link in 24 hours.
-*   Add like count and people who liked the post.
-*   Add follow functionality.
-
-### Frontend
-
-*   Convert from React to Svelte.
-*   Separate page for chats and user chat. (Chats are list of users who I have chat with in the past and UserChat is a single user chatting interface)
-*   Profile edit page or modal.
-*   Send message to user button and modal.
+*   Follow notification.
+*   Chat notification.
+*   Plan to move to serverless (vercel).
 
 ## Run the project
 
