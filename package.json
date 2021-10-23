@@ -10,15 +10,15 @@
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
+    "debug": "~4.3.2",
+    "express": "~4.17.1",
     "express-validator": "^6.13.0",
-    "googleapis": "^60.0.1",
+    "googleapis": "^89.0.0",
     "jsonwebtoken": "^8.5.1",
     "link-preview-js": "^2.1.8",
-    "mongoose": "^5.13.12",
-    "morgan": "~1.9.1",
-    "socket.io": "^2.4.1"
+    "mongoose": "^6.0.12",
+    "morgan": "~1.10.0",
+    "socket.io": "^4.3.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.7",
