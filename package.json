@@ -12,17 +12,17 @@
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
-    "express-validator": "^6.12.1",
+    "express-validator": "^6.13.0",
     "googleapis": "^60.0.1",
     "jsonwebtoken": "^8.5.1",
     "link-preview-js": "^2.1.8",
-    "mongoose": "^5.13.9",
+    "mongoose": "^5.13.12",
     "morgan": "~1.9.1",
     "socket.io": "^2.4.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.7",
-    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-env": "^7.15.8",
     "rimraf": "^3.0.2"
   }
 }
