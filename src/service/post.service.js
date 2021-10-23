@@ -270,3 +270,16 @@ exports.bookmarks = async (username) => {
 
   return userBookmarkedPosts;
 };
+
+exports.deleteComment = async (username,postId,commentId) => {
+  const post = await Post.findById(postId);
+  
+  if(post != null && post.author !== username){
+    return {error : "not authorized"};
+  }
+
+  post.comments.id(commentId).remove();
+  const updatedPost = await post.save();
+
+  return updatedPost;
+}
