@@ -190,9 +190,6 @@ exports.deleteComment = async (req, res) => {
     
     const post = await postService.deleteComment(username,postId,commentId);
 
-    if(post.error){
-      throw new Error(post.error);
-    }
 
     res.status(200).json({ post });
   }

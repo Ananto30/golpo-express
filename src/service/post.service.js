@@ -275,11 +275,19 @@ exports.deleteComment = async (username,postId,commentId) => {
   const post = await Post.findById(postId);
   
   if(post != null && post.author !== username){
-    return {error : "not authorized"};
+    throw new Error("not authorized");
   }
 
-  post.comments.id(commentId).remove();
-  const updatedPost = await post.save();
+  const updatedPost = await Post.findByIdAndUpdate(
+    postId,
+    {
+      $pull: { 
+        comments: { _id : commentId }
+      }
+    },
+    { new: true }
+  );
+
 
   return updatedPost;
 }
