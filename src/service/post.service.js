@@ -290,4 +290,4 @@ exports.deleteComment = async (username,postId,commentId) => {
 
 
   return updatedPost;
-}
+};
