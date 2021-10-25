@@ -182,6 +182,29 @@ exports.bookmarks = async (req, res) => {
   }
 };
 
+exports.deleteComment = async (req, res) => {
+  try{
+    const {username} = req.decoded;
+    const postId = req.params.postId;
+    const commentId = req.params.commentId;
+    
+    const post = await postService.deleteComment(username,postId,commentId);
+
+
+    res.status(200).json({ post });
+  }
+  catch(err){
+      if(err.message === "not authorized"){
+        res.status(400).json({ errors: err.message});
+        return ;
+      }
+      res.status(500).json({ errors: err.message });
+      console.log(err);
+      return;
+  }
+
+};
+
 exports.validators = {
   validateComment: {
     text: {

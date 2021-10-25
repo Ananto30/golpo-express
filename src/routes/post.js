@@ -54,4 +54,10 @@ router.get(
   postController.getPostsByUsername
 );
 
+router.delete(
+  "/:postId/comment/:commentId/delete",
+  tokenMiddleware.checkToken,
+  postController.deleteComment
+);
+
 module.exports = router;
