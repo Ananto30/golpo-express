@@ -6,6 +6,8 @@ const activityService = require("./activity.service");
 const notificationService = require("./notification.service");
 const { getLinkPreview } = require("link-preview-js");
 
+const userService = require("./user.service");
+
 exports.getAllPosts = async (tokenUser) => {
   const posts = await Post.aggregate([
     { $match: {} },
@@ -271,23 +273,45 @@ exports.bookmarks = async (username) => {
   return userBookmarkedPosts;
 };
 
-exports.deleteComment = async (username,postId,commentId) => {
+exports.deleteComment = async (username, postId, commentId) => {
   const post = await Post.findById(postId);
-  
-  if(post != null && post.author !== username){
+
+  if (post != null && post.author !== username) {
     throw new Error("not authorized");
   }
 
   const updatedPost = await Post.findByIdAndUpdate(
     postId,
     {
-      $pull: { 
-        comments: { _id : commentId }
-      }
+      $pull: {
+        comments: { _id: commentId },
+      },
     },
     { new: true }
   );
 
-
   return updatedPost;
+};
+
+exports.getUserFeedPosts = async (username) => {
+  let feedPosts = [];
+  const user = await userService.getUserByUsername(username);
+  if (user && user.following.length > 0) {
+    const post = await Post.find({ author: { $in: user.following } });
+    feedPosts = [...feedPosts, ...post];
+
+    if (feedPosts.length < 50) {
+      const morePosts = await Post.find({ author: { $nin: user.following } });
+      feedPosts = [...feedPosts, ...morePosts];
+    }
+
+    const sortedPosts = feedPosts.sort(
+      (firstEl, secondEl) =>
+        new Date(secondEl.created_at) - new Date(firstEl.created_at)
+    );
+
+    return sortedPosts;
+  }
+
+  return await Post.find().sort({ created_at: -1 }).exec();
 };
