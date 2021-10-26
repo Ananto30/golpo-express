@@ -3,13 +3,7 @@ const mongoose = require("mongoose");
 const config = require("../config");
 const userService = require("../service/user.service");
 
-const mongooseConnectOptions = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-};
-
-mongoose.connect(config.mongoUrl, mongooseConnectOptions);
+mongoose.connect(config.mongoUrl);
 
 void (async function () {
   let data = {

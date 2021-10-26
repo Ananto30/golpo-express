@@ -40,13 +40,8 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-const mongooseConnectOptions = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-};
 
-mongoose.connect(config.mongoUrl, mongooseConnectOptions);
+mongoose.connect(config.mongoUrl);
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, "/../public")));
