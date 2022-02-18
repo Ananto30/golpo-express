@@ -8,21 +8,21 @@
     "bootstrap": "node ./src/scripts/bootstrap.js"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
+    "cookie-parser": "~1.4.6",
     "cors": "^2.8.5",
-    "debug": "~4.3.2",
-    "express": "~4.17.1",
-    "express-validator": "^6.13.0",
-    "googleapis": "^91.0.0",
+    "debug": "~4.3.3",
+    "express": "~4.17.3",
+    "express-validator": "^6.14.0",
+    "googleapis": "^95.0.0",
     "jsonwebtoken": "^8.5.1",
-    "link-preview-js": "^2.1.8",
-    "mongoose": "^6.0.12",
+    "link-preview-js": "^2.1.13",
+    "mongoose": "^6.2.2",
     "morgan": "~1.10.0",
-    "socket.io": "^4.3.2"
+    "socket.io": "^4.4.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.16.0",
-    "@babel/preset-env": "^7.16.0",
+    "@babel/cli": "^7.17.3",
+    "@babel/preset-env": "^7.16.11",
     "rimraf": "^3.0.2"
   }
 }
