@@ -90,7 +90,7 @@ exports.updateUserMeta = async (username, updateInfo) => {
     { new: true }
   );
 
-  await metaUpdateActivity(username, updateInfo);
+  // await metaUpdateActivity(username, updateInfo);
 
   return userInfo;
 };
