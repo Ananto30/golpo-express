@@ -43,20 +43,11 @@ app.use(cors());
 
 mongoose.connect(config.mongoUrl);
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, "/../public")));
-
 app.use("/api/auth", authRouter);
 app.use("/api/post", postRouter);
 app.use("/api/chat", chatRouter);
 app.use("/api/user", userRouter);
 app.use("/api/activity", activityRouter);
 app.use("/api/notification", notificationRouter);
-
-// The "catchall" handler: for any request that doesn't
-// match one above, send back Svelte's index.html file.
-app.get("*", (req, res) => {  // lgtm [js/missing-rate-limiting]
-  res.sendFile(path.join(__dirname + "/../public/index.html"));
-});
 
 module.exports = app;
