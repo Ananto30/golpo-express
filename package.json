@@ -16,12 +16,12 @@
     "googleapis": "^95.0.0",
     "jsonwebtoken": "^8.5.1",
     "link-preview-js": "^2.1.13",
-    "mongoose": "^6.2.2",
+    "mongoose": "^6.2.3",
     "morgan": "~1.10.0",
     "socket.io": "^4.4.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.17.3",
+    "@babel/cli": "^7.17.6",
     "@babel/preset-env": "^7.16.11",
     "rimraf": "^3.0.2"
   }
