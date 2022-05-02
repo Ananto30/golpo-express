@@ -4,14 +4,14 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 var cors = require("cors");
 
-const authRouter = require("./routes/auth");
-const postRouter = require("./routes/post");
-const chatRouter = require("./routes/chat");
-const userRouter = require("./routes/user");
-const activityRouter = require("./routes/activity");
-const notificationRouter = require("./routes/notification");
+const authRouter = require("./api/auth");
+const postRouter = require("./api/post");
+const chatRouter = require("./api/chat");
+const userRouter = require("./api/user");
+const activityRouter = require("./api/activity");
+const notificationRouter = require("./api/notification");
 
-const config = require("./config");
+const config = require("./src/config");
 
 const app = express();
 
