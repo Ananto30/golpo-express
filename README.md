@@ -4,7 +4,7 @@
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/Ananto30/golpo-express.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Ananto30/golpo-express/context:javascript)
 [![Depfu](https://badges.depfu.com/badges/5db5110e672c2d5c92ef48f20231d819/count.svg)](https://depfu.com/github/Ananto30/golpo-express?project_id=32581)
 
-This is the Express (Node.js) backend of the [golpo.dedsec.life](https://golpo.dedsec.life). It's a rebuild and lots of new features added on top of the old app - [golpo13.herokuapp.com](http://golpo13.herokuapp.com/)
+This is the Express (Node.js) backend of the [golpo.vercel.app](https://golpo.vercel.app). It's a rebuild and lots of new features added on top of the old app - [golpo13.herokuapp.com](http://golpo13.herokuapp.com/)
 
 **Golpo is a link sharing platform without ads.**
 
