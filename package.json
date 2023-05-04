@@ -18,7 +18,7 @@
     "link-preview-js": "^3.0.4",
     "mongoose": "^6.8.4",
     "morgan": "~1.10.0",
-    "socket.io": "^4.5.4",
+    "socket.io": "^4.6.1",
     "vercel": "^28.15.3"
   },
   "devDependencies": {
