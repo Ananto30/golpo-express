@@ -12,18 +12,18 @@
     "cors": "^2.8.5",
     "debug": "~4.3.4",
     "express": "~4.18.2",
-    "express-validator": "^6.15.0",
-    "googleapis": "^111.0.0",
+    "express-validator": "^7.0.1",
+    "googleapis": "^118.0.0",
     "jsonwebtoken": "^9.0.0",
     "link-preview-js": "^3.0.4",
-    "mongoose": "^6.9.1",
+    "mongoose": "^7.1.1",
     "morgan": "~1.10.0",
     "socket.io": "^4.6.1",
-    "vercel": "^28.15.3"
+    "vercel": "^30.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.21.0",
-    "@babel/preset-env": "^7.20.2",
-    "rimraf": "^4.1.2"
+    "@babel/cli": "^7.21.5",
+    "@babel/preset-env": "^7.22.4",
+    "rimraf": "^5.0.1"
   }
 }
