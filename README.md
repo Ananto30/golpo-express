@@ -1,7 +1,6 @@
 # Golpo Express
 
-[![DeepScan grade](https://deepscan.io/api/teams/15735/projects/18961/branches/477973/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=15735&pid=18961&bid=477973)
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/Ananto30/golpo-express.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Ananto30/golpo-express/context:javascript)
+[![DeepScan grade](https://deepscan.io/api/teams/15735/projects/25100/branches/779389/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=15735&pid=25100&bid=779389)
 [![Depfu](https://badges.depfu.com/badges/5db5110e672c2d5c92ef48f20231d819/count.svg)](https://depfu.com/github/Ananto30/golpo-express?project_id=32581)
 
 This is the Express (Node.js) backend of the [golpo.vercel.app](https://golpo.vercel.app). It's a rebuild and lots of new features added on top of the old app - [golpo13.herokuapp.com](http://golpo13.herokuapp.com/)
