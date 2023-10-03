@@ -12,20 +12,21 @@ router.get(
   tokenMiddleware.checkToken,
   postController.getUserFeedPosts
 );
-router.get("/", tokenMiddleware.checkToken, postController.getAll);
+router.route
+  .get("/", tokenMiddleware.checkToken, postController.getAll);
+  .post(
+  "/",
+  tokenMiddleware.checkToken,
+  validateSchema(postController.validators.validateUrl),
+  postController.createPost
+)
+
 router.get("/:id", tokenMiddleware.checkToken, postController.getById);
 
 router.post(
   "/:id/delete",
   tokenMiddleware.checkToken,
   postController.deletePost
-);
-
-router.post(
-  "/",
-  tokenMiddleware.checkToken,
-  validateSchema(postController.validators.validateUrl),
-  postController.createPost
 );
 
 router.post(
