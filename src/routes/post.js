@@ -13,7 +13,7 @@ router.get(
   postController.getUserFeedPosts
 );
 router.route
-  .get("/", tokenMiddleware.checkToken, postController.getAll);
+  .get("/", tokenMiddleware.checkToken, postController.getAll)
   .post(
   "/",
   tokenMiddleware.checkToken,
