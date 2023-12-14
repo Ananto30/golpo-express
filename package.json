@@ -13,17 +13,17 @@
     "debug": "~4.3.4",
     "express": "~4.18.2",
     "express-validator": "^7.0.1",
-    "googleapis": "^126.0.1",
+    "googleapis": "^129.0.0",
     "jsonwebtoken": "^9.0.2",
     "link-preview-js": "^3.0.5",
-    "mongoose": "^7.5.0",
+    "mongoose": "^8.0.1",
     "morgan": "~1.10.0",
     "socket.io": "^4.7.2",
-    "vercel": "^31.4.0"
+    "vercel": "^32.5.6"
   },
   "devDependencies": {
-    "@babel/cli": "^7.22.15",
-    "@babel/preset-env": "^7.22.15",
-    "rimraf": "^5.0.1"
+    "@babel/cli": "^7.23.4",
+    "@babel/preset-env": "^7.23.5",
+    "rimraf": "^5.0.5"
   }
 }
