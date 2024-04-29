@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
-    "@babel/preset-env": "^7.24.3",
+    "@babel/preset-env": "^7.24.4",
     "rimraf": "^5.0.5"
   }
 }
