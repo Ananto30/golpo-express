@@ -59,7 +59,7 @@ router.get(
   postController.getPostsByUsername
 );
 
-router.delete(
+router.post(
   "/:postId/comment/:commentId/delete",
   tokenMiddleware.checkToken,
   postController.deleteComment
