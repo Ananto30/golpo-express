@@ -285,8 +285,12 @@ exports.bookmarks = async (username) => {
 
 exports.deleteComment = async (username, postId, commentId) => {
   const post = await Post.findById(postId);
+  if (post == null) {
+    throw new Error("post not found");
+  }
 
-  if (post != null && post.author !== username) {
+  const comment = post.comments.find((c) => c._id == commentId);
+  if (post.author !== username || comment.author !== username) {
     throw new Error("not authorized");
   }
 
