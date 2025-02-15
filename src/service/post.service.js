@@ -290,7 +290,7 @@ exports.deleteComment = async (username, postId, commentId) => {
   }
 
   const comment = post.comments.find((c) => c._id == commentId);
-  if (post.author !== username || comment.author !== username) {
+  if (post.author !== username && comment.author !== username) {
     throw new Error("not authorized");
   }
 
