@@ -23,7 +23,7 @@ exports.createActivity = async (data) => {
     extra_images: data.extraImages,
   };
   const activity = await Activity.create(actData);
-  sendSocketActivity(activity);
+  // sendSocketActivity(activity);
   return activity;
 };
 

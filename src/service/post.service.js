@@ -110,6 +110,16 @@ const extractUrlMetadata = async (url) => {
 };
 
 exports.createComment = async (author, text, postId) => {
+  // if same comment is already there then return
+  const existingCommentPost = await Post.findOne({
+    _id: postId,
+    "comments.author": author,
+    "comments.text": text,
+  });
+  if (existingCommentPost) {
+    return existingCommentPost;
+  }
+
   const post = await Post.findOneAndUpdate(
     {
       _id: postId,
