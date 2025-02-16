@@ -1,19 +1,11 @@
-const express = require("express");
+import express from 'express';
+import * as activityController from '../src/controller/activity.controller.js';
+import * as tokenMiddleware from '../src/middleware/token.js';
+
 const router = express.Router();
 
-const activityController = require("../src/controller/activity.controller");
-const tokenMiddleware = require("../src/middleware/token");
+router.get('/', tokenMiddleware.checkToken, activityController.getAllActivities);
 
-router.get(
-  "/",
-  tokenMiddleware.checkToken,
-  activityController.getAllActivities
-);
+router.get('/me', tokenMiddleware.checkToken, activityController.getActivitiesByToken);
 
-router.get(
-  "/me",
-  tokenMiddleware.checkToken,
-  activityController.getActivitiesByToken
-);
-
-module.exports = router;
+export default router;

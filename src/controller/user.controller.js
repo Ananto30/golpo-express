@@ -1,6 +1,6 @@
-const userService = require("../service/user.service");
+import * as userService from '../service/user.service.js';
 
-exports.getAllUsers = async (req, res) => {
+export const getAllUsers = async (req, res) => {
   try {
     const users = await userService.getAllUsers();
 
@@ -12,7 +12,7 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-exports.getUserMetaByToken = async (req, res) => {
+export const getUserMetaByToken = async (req, res) => {
   try {
     const { username } = req.decoded;
 
@@ -26,7 +26,7 @@ exports.getUserMetaByToken = async (req, res) => {
   }
 };
 
-exports.getUserMetaByUsername = async (req, res) => {
+export const getUserMetaByUsername = async (req, res) => {
   try {
     const { username } = req.params;
 
@@ -40,7 +40,7 @@ exports.getUserMetaByUsername = async (req, res) => {
   }
 };
 
-exports.updateMeta = async (req, res) => {
+export const updateMeta = async (req, res) => {
   try {
     const { username } = req.decoded;
 
@@ -54,7 +54,7 @@ exports.updateMeta = async (req, res) => {
   }
 };
 
-exports.getUsersMeta = async (req, res) => {
+export const getUsersMeta = async (req, res) => {
   try {
     const { usernames } = req.body;
 
@@ -68,7 +68,7 @@ exports.getUsersMeta = async (req, res) => {
   }
 };
 
-exports.followUser = async (req, res) => {
+export const followUser = async (req, res) => {
   try {
     const { username } = req.params;
 
@@ -86,7 +86,7 @@ exports.followUser = async (req, res) => {
   }
 };
 
-exports.unFollowUser = async (req, res) => {
+export const unFollowUser = async (req, res) => {
   try {
     const { username } = req.params;
 
@@ -99,7 +99,7 @@ exports.unFollowUser = async (req, res) => {
   }
 };
 
-exports.getUserDetails = async (req, res) => {
+export const getUserDetails = async (req, res) => {
   try {
     const { username } = req.params;
 
@@ -125,7 +125,7 @@ exports.getUserDetails = async (req, res) => {
   }
 };
 
-exports.getFollowers = async (req, res) => {
+export const getFollowers = async (req, res) => {
   try {
     const { username } = req.params;
 
@@ -139,7 +139,7 @@ exports.getFollowers = async (req, res) => {
   }
 };
 
-exports.getFollowing = async (req, res) => {
+export const getFollowing = async (req, res) => {
   try {
     const { username } = req.params;
 
@@ -153,20 +153,19 @@ exports.getFollowing = async (req, res) => {
   }
 };
 
-
-exports.validators = {
+export const validators = {
   updateMeta: {
-    work: { in: ["body"] },
-    tagline: { in: ["body"] },
-    image: { in: ["body"] },
+    work: { in: ['body'] },
+    tagline: { in: ['body'] },
+    image: { in: ['body'] },
   },
   getUsersMeta: {
     usernames: {
-      in: ["body"],
+      in: ['body'],
       isArray: true,
     },
   },
   followUser: {
-    username: { in: ["body"], errorMessage: "username is required" },
+    username: { in: ['body'], errorMessage: 'username is required' },
   },
 };

@@ -1,5 +1,6 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose';
+
+const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
@@ -18,7 +19,7 @@ const userSchema = new Schema(
 
     google_token: String, // this is a hack to save jwt token for oauth login, this token has a low expiration time
   },
-  { collection: "user" } // TODO: should be removed, need to fix mongo model
+  { collection: 'user' }, // TODO: should be removed, need to fix mongo model
 );
 
 const userInfoSchema = new Schema(
@@ -29,10 +30,8 @@ const userInfoSchema = new Schema(
     image: String,
     display_name: String,
   },
-  { collection: "userinfo" } // TODO: should be removed, need to fix mongo model
+  { collection: 'userinfo' }, // TODO: should be removed, need to fix mongo model
 );
 
-module.exports = {
-  User: mongoose.model("User", userSchema),
-  UserInfo: mongoose.model("UserInfo", userInfoSchema),
-};
+export const User = mongoose.model('User', userSchema);
+export const UserInfo = mongoose.model('UserInfo', userInfoSchema);

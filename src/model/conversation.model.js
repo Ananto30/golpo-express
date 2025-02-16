@@ -1,5 +1,6 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose';
+
+const { Schema } = mongoose;
 
 const conversationSchema = new Schema(
   {
@@ -13,9 +14,7 @@ const conversationSchema = new Schema(
       },
     ],
   },
-  { collection: "conversation" } // TODO: should be removed, need to fix mongo model
+  { collection: 'conversation' }, // TODO: should be removed, need to fix mongo model
 );
 
-module.exports = {
-  Conversation: mongoose.model("Conversation", conversationSchema),
-};
+export const Conversation = mongoose.model('Conversation', conversationSchema);

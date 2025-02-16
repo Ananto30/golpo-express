@@ -1,19 +1,11 @@
-const express = require("express");
+import express from 'express';
 const router = express.Router();
 
-const notificationController = require("../controller/notification.controller");
-const tokenMiddleware = require("../middleware/token");
+import * as notificationController from '../controller/notification.controller.js';
+import { checkToken } from '../middleware/token.js';
 
-router.get(
-  "/:username",
-  tokenMiddleware.checkToken,
-  notificationController.getNotificationsByUsername
-);
+router.get('/:username', checkToken, notificationController.getNotificationsByUsername);
 
-router.post(
-  "/:id/clicked",
-  tokenMiddleware.checkToken,
-  notificationController.notificationClicked
-);
+router.post('/:id/clicked', checkToken, notificationController.notificationClicked);
 
-module.exports = router;
+export default router;

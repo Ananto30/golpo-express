@@ -1,5 +1,6 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose';
+
+const { Schema } = mongoose;
 
 const activitySchema = new Schema(
   {
@@ -10,9 +11,7 @@ const activitySchema = new Schema(
     extra_text: String,
     extra_images: [String],
   },
-  { collection: "activity" } // TODO: should be removed, need to fix mongo model
+  { collection: 'activity' }, // TODO: should be removed, need to fix mongo model
 );
 
-module.exports = {
-  Activity: mongoose.model("Activity", activitySchema),
-};
+export const Activity = mongoose.model('Activity', activitySchema);

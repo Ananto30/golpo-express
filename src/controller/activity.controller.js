@@ -1,6 +1,6 @@
-const activityService = require("../service/activity.service");
+import * as activityService from '../service/activity.service.js';
 
-exports.getAllActivities = async (req, res) => {
+export const getAllActivities = async (req, res) => {
   try {
     // TODO: Make new method?
     // activities = await activityService.getAll();
@@ -14,7 +14,7 @@ exports.getAllActivities = async (req, res) => {
   }
 };
 
-exports.getActivitiesByToken = async (req, res) => {
+export const getActivitiesByToken = async (req, res) => {
   try {
     const { username } = req.decoded;
 

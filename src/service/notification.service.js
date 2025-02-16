@@ -1,9 +1,7 @@
-const NotificationModel = require("../model/notification.model");
-const Notification = NotificationModel.Notification;
+import { Notification } from '../model/notification.model.js';
+import * as postService from './post.service.js';
 
-const postService = require("./post.service");
-
-exports.createCommentNotification = async (postId, comment_author) => {
+export const createCommentNotification = async (postId, comment_author) => {
   const post = await postService.getPostById(postId);
   const username = post.author;
 
@@ -18,14 +16,9 @@ exports.createCommentNotification = async (postId, comment_author) => {
   return commentNotification;
 };
 
-exports.getNotificationsByUsername = async (username) =>
-  await Notification.find({ comment_author: username });
+export const getNotificationsByUsername = async (username) => await Notification.find({ comment_author: username });
 
-exports.findOneNotificationById = async (id) => await Notification.findById(id);
+export const findOneNotificationById = async (id) => await Notification.findById(id);
 
-exports.notificationClicked = async (id) =>
-  await Notification.findOneAndUpdate(
-    { _id: id },
-    { clicked: true },
-    { new: true }
-  );
+export const notificationClicked = async (id) =>
+  await Notification.findOneAndUpdate({ _id: id }, { clicked: true }, { new: true });

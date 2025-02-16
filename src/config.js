@@ -1,6 +1,6 @@
-module.exports = {
+export default {
   jwtSecret: process.env.JWT_SECRET,
-  jwtExpiration: "24h",
+  jwtExpiration: '24h',
   googleClientID: process.env.GOOGLE_CLIENT_ID,
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
   googleCallbackUrl: process.env.GOOGLE_CALLBACK_URL,

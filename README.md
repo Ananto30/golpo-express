@@ -15,10 +15,10 @@ This Hacktoberfest Golpo got a bump from the awesome contributors. Shoutout to t
 
 ## Remaining tasks
 
-*   Do not allow to share the same link in 24 hours.
-*   Follow notification.
-*   Chat notification.
-*   Plan to move to serverless (vercel).
+- Do not allow to share the same link in 24 hours.
+- Follow notification.
+- Chat notification.
+- Plan to move to serverless (vercel).
 
 ## Run the project
 
@@ -34,7 +34,7 @@ Set env variables -
 set -o allexport; source .env; set +o allexport;
 ```
 
-(*see config.js for all env variables*)
+(_see config.js for all env variables_)
 
 Run the server -
 

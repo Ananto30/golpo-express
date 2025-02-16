@@ -1,7 +1,7 @@
-const { tags, adultURLs } = require("../constants");
-const postService = require("../service/post.service");
+import { tags, adultURLs } from '../constants.js';
+import * as postService from '../service/post.service.js';
 
-exports.getAll = async (req, res) => {
+export const getAll = async (req, res) => {
   const tags = req.query.tags;
   const tokenUser = req.decoded.username;
 
@@ -9,7 +9,7 @@ exports.getAll = async (req, res) => {
     let posts;
     // Filter by tags if provided
     if (!!tags && tags.length > 0) {
-      posts = await postService.getAllPostsByTags(tags.split(","), tokenUser);
+      posts = await postService.getAllPostsByTags(tags.split(','), tokenUser);
     } else {
       posts = await postService.getAllPosts(tokenUser);
     }
@@ -21,7 +21,7 @@ exports.getAll = async (req, res) => {
   }
 };
 
-exports.getById = async (req, res) => {
+export const getById = async (req, res) => {
   try {
     const { id } = req.params;
     const tokenUser = req.decoded.username;
@@ -41,7 +41,7 @@ exports.getById = async (req, res) => {
   }
 };
 
-exports.createPost = async (req, res) => {
+export const createPost = async (req, res) => {
   try {
     const { url } = req.body;
     const { username } = req.decoded;
@@ -49,7 +49,7 @@ exports.createPost = async (req, res) => {
 
     adultURLs.forEach((a) => {
       if (url.includes(a)) {
-        res.status(400).json({ errors: "Adult content not allowed ⛔" });
+        res.status(400).json({ errors: 'Adult content not allowed ⛔' });
         return;
       }
     });
@@ -64,7 +64,7 @@ exports.createPost = async (req, res) => {
   }
 };
 
-exports.createComment = async (req, res) => {
+export const createComment = async (req, res) => {
   try {
     const { text } = req.body;
     const { username } = req.decoded;
@@ -80,7 +80,7 @@ exports.createComment = async (req, res) => {
   }
 };
 
-exports.reactLove = async (req, res) => {
+export const reactLove = async (req, res) => {
   try {
     const { username } = req.decoded;
     const { postId } = req.params;
@@ -95,7 +95,7 @@ exports.reactLove = async (req, res) => {
   }
 };
 
-exports.getPostsByUsername = async (req, res) => {
+export const getPostsByUsername = async (req, res) => {
   try {
     const { username } = req.params;
     const tokenUser = req.decoded.username;
@@ -110,7 +110,7 @@ exports.getPostsByUsername = async (req, res) => {
   }
 };
 
-exports.getPostsByToken = async (req, res) => {
+export const getPostsByToken = async (req, res) => {
   try {
     const { username } = req.decoded;
     const posts = await postService.getPostsByUsername(username, username);
@@ -123,11 +123,11 @@ exports.getPostsByToken = async (req, res) => {
   }
 };
 
-exports.getAllTags = (req, res) => {
+export const getAllTags = (req, res) => {
   res.status(200).json({ tags });
 };
 
-exports.deletePost = async (req, res) => {
+export const deletePost = async (req, res) => {
   try {
     const { id } = req.params;
     const { username } = req.decoded;
@@ -142,23 +142,20 @@ exports.deletePost = async (req, res) => {
   }
 };
 
-exports.bookmarkPost = async (req, res) => {
+export const bookmarkPost = async (req, res) => {
   try {
     const { username } = req.decoded;
     const { postId } = req.params;
 
-    const checkIfPreviouslyBookmarked = await postService.checkIfBookmarked(
-      postId,
-      username
-    );
+    const checkIfPreviouslyBookmarked = await postService.checkIfBookmarked(postId, username);
 
     if (checkIfPreviouslyBookmarked) {
-      res.status(404).json({ errors: "post already bookmarked" });
+      res.status(404).json({ errors: 'post already bookmarked' });
       return;
     }
 
     const verifyPost = await postService.getPostById(postId);
-    if (!verifyPost) res.status(404).json({ errors: "post not found" });
+    if (!verifyPost) res.status(404).json({ errors: 'post not found' });
 
     const bookmarkedpost = await postService.bookmarkPost(postId, username);
 
@@ -170,7 +167,7 @@ exports.bookmarkPost = async (req, res) => {
   }
 };
 
-exports.bookmarks = async (req, res) => {
+export const bookmarks = async (req, res) => {
   try {
     const { username } = req.decoded;
     const bookmarks = await postService.bookmarks(username);
@@ -182,7 +179,7 @@ exports.bookmarks = async (req, res) => {
   }
 };
 
-exports.deleteComment = async (req, res) => {
+export const deleteComment = async (req, res) => {
   try {
     const { username } = req.decoded;
     const postId = req.params.postId;
@@ -192,7 +189,7 @@ exports.deleteComment = async (req, res) => {
 
     res.status(200).json({ post });
   } catch (err) {
-    if (err.message === "not authorized") {
+    if (err.message === 'not authorized') {
       res.status(400).json({ errors: err.message });
       return;
     }
@@ -202,7 +199,7 @@ exports.deleteComment = async (req, res) => {
   }
 };
 
-exports.getUserFeedPosts = async (req, res) => {
+export const getUserFeedPosts = async (req, res) => {
   try {
     const feedPosts = await postService.getUserFeedPosts(req.decoded.username);
     res.status(200).json({ feedPosts });
@@ -213,11 +210,11 @@ exports.getUserFeedPosts = async (req, res) => {
   }
 };
 
-exports.validators = {
+export const validators = {
   validateComment: {
     text: {
       isLength: {
-        errorMessage: "test should be between 1 and 100 characters",
+        errorMessage: 'test should be between 1 and 100 characters',
         options: { min: 1, max: 100 },
       },
     },
@@ -226,9 +223,9 @@ exports.validators = {
   validateUrl: {
     url: {
       isUrl: {
-        errorMessage: "Must be a Valid URL",
+        errorMessage: 'Must be a Valid URL',
         options: {
-          protocols: ["http", "https", "ftp"],
+          protocols: ['http', 'https', 'ftp'],
           require_tld: true,
           require_protocol: true,
         },

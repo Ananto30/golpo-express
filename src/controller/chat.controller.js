@@ -1,6 +1,6 @@
-const chatService = require("../service/conversation.service");
+import * as chatService from '../service/conversation.service.js';
 
-exports.getChats = async (req, res) => {
+export const getChats = async (req, res) => {
   try {
     const { username } = req.decoded;
     const chats = await chatService.getChatListAndLastChatForUser(username);
@@ -13,14 +13,11 @@ exports.getChats = async (req, res) => {
   }
 };
 
-exports.getByReceiver = async (req, res) => {
+export const getByReceiver = async (req, res) => {
   try {
     const { username } = req.decoded;
     const { receiver } = req.params;
-    const chats = await chatService.getChatByUsernameForUser(
-      username,
-      receiver
-    );
+    const chats = await chatService.getChatByUsernameForUser(username, receiver);
 
     res.status(200).json(chats);
   } catch (err) {
@@ -30,7 +27,7 @@ exports.getByReceiver = async (req, res) => {
   }
 };
 
-exports.sendChat = async (req, res) => {
+export const sendChat = async (req, res) => {
   try {
     const { text } = req.body;
     const { receiver } = req.params;
@@ -46,7 +43,7 @@ exports.sendChat = async (req, res) => {
   }
 };
 
-exports.sendMessage = async (req, res) => {
+export const sendMessage = async (req, res) => {
   try {
     const { text } = req.body;
     const { receiver } = req.params;
@@ -62,7 +59,7 @@ exports.sendMessage = async (req, res) => {
   }
 };
 
-exports.chatSeen = async (req, res) => {
+export const chatSeen = async (req, res) => {
   try {
     const { receiver, chatId } = req.params;
     const { username } = req.decoded;
@@ -76,14 +73,14 @@ exports.chatSeen = async (req, res) => {
   }
 };
 
-exports.validators = {
+export const validators = {
   sendChat: {
     receiver: {
-      in: ["params"],
+      in: ['params'],
       isEmpty: { negated: true },
     },
     text: {
-      in: ["body"],
+      in: ['body'],
       isEmpty: { negated: true },
     },
   },

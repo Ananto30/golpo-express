@@ -1,14 +1,11 @@
-const PostModel = require("../model/post.model");
-const Post = PostModel.Post;
-const BookmarkPostModel = require("../model/bookmark.model");
-const BookmarkPost = BookmarkPostModel.BookmarkPost;
-const activityService = require("./activity.service");
-const notificationService = require("./notification.service");
-const { getLinkPreview } = require("link-preview-js");
+import { Post } from '../model/post.model.js';
+import { BookmarkPost } from '../model/bookmark.model.js';
+import * as activityService from './activity.service.js';
+import * as notificationService from './notification.service.js';
+import { getLinkPreview } from 'link-preview-js';
+import * as userService from './user.service.js';
 
-const userService = require("./user.service");
-
-exports.getAllPosts = async (tokenUser) => {
+export const getAllPosts = async (tokenUser) => {
   const posts = await Post.aggregate([
     { $match: {} },
     {
@@ -24,10 +21,10 @@ exports.getAllPosts = async (tokenUser) => {
         favicon: 1,
         author_image: 1,
         created_at: 1,
-        commentCount: { $size: "$comments" },
-        loveCount: { $size: "$loves" },
+        commentCount: { $size: '$comments' },
+        loveCount: { $size: '$loves' },
         isLovedByMe: {
-          $in: [tokenUser, "$loves.author"],
+          $in: [tokenUser, '$loves.author'],
         },
         tags: 1,
       },
@@ -37,13 +34,13 @@ exports.getAllPosts = async (tokenUser) => {
   return posts;
 };
 
-exports.getPostById = async (id) => {
+export const getPostById = async (id) => {
   return await Post.findOne({
     _id: id,
   });
 };
 
-exports.getAllPostsByTags = async (tags, tokenUser) => {
+export const getAllPostsByTags = async (tags, tokenUser) => {
   const posts = await Post.aggregate([
     {
       $match: {
@@ -64,10 +61,10 @@ exports.getAllPostsByTags = async (tags, tokenUser) => {
         site_name: 1,
         favicon: 1,
         created_at: 1,
-        commentCount: { $size: "$comments" },
-        loveCount: { $size: "$loves" },
+        commentCount: { $size: '$comments' },
+        loveCount: { $size: '$loves' },
         isLovedByMe: {
-          $in: [tokenUser, "$loves.author"],
+          $in: [tokenUser, '$loves.author'],
         },
         tags: 1,
       },
@@ -77,7 +74,7 @@ exports.getAllPostsByTags = async (tags, tokenUser) => {
   return posts;
 };
 
-exports.createPost = async (author, url, tags) => {
+export const createPost = async (author, url, tags) => {
   const metadata = await extractUrlMetadata(url);
 
   const post = await Post.create({
@@ -96,7 +93,7 @@ exports.createPost = async (author, url, tags) => {
 
   const data = {
     username: author,
-    summary: "posted",
+    summary: 'posted',
     link: `/post/${post._id}`,
   };
   await activityService.createActivity(data);
@@ -109,12 +106,12 @@ const extractUrlMetadata = async (url) => {
   return metadata;
 };
 
-exports.createComment = async (author, text, postId) => {
+export const createComment = async (author, text, postId) => {
   // if same comment is already there then return
   const existingCommentPost = await Post.findOne({
     _id: postId,
-    "comments.author": author,
-    "comments.text": text,
+    'comments.author': author,
+    'comments.text': text,
   });
   if (existingCommentPost) {
     return existingCommentPost;
@@ -135,7 +132,7 @@ exports.createComment = async (author, text, postId) => {
     },
     {
       new: true,
-    }
+    },
   );
 
   await notificationService.createCommentNotification(postId, author);
@@ -151,10 +148,10 @@ exports.createComment = async (author, text, postId) => {
   return post;
 };
 
-exports.reactLove = async (author, postId) => {
+export const reactLove = async (author, postId) => {
   const post = await Post.findOne({
     _id: postId,
-    "loves.author": author,
+    'loves.author': author,
   });
   if (post) {
     return post;
@@ -172,7 +169,7 @@ exports.reactLove = async (author, postId) => {
     },
     {
       new: true,
-    }
+    },
   );
 
   const data = {
@@ -185,7 +182,7 @@ exports.reactLove = async (author, postId) => {
   return postUpdate;
 };
 
-exports.getPostsByUsername = async (username, tokenUser) => {
+export const getPostsByUsername = async (username, tokenUser) => {
   const posts = await Post.aggregate([
     {
       $match: {
@@ -205,10 +202,10 @@ exports.getPostsByUsername = async (username, tokenUser) => {
         site_name: 1,
         favicon: 1,
         created_at: 1,
-        commentCount: { $size: "$comments" },
-        loveCount: { $size: "$loves" },
+        commentCount: { $size: '$comments' },
+        loveCount: { $size: '$loves' },
         isLovedByMe: {
-          $in: [tokenUser, "$loves.author"],
+          $in: [tokenUser, '$loves.author'],
         },
         tags: 1,
       },
@@ -217,7 +214,7 @@ exports.getPostsByUsername = async (username, tokenUser) => {
   return posts;
 };
 
-exports.deletePost = async (id, username) => {
+export const deletePost = async (id, username) => {
   await Post.findOneAndDelete({
     _id: id,
     author: username,
@@ -225,19 +222,14 @@ exports.deletePost = async (id, username) => {
   return true;
 };
 
-exports.checkIfBookmarked = async (postId, username) =>
-  await BookmarkPost.findOne({ post_ids: postId, username });
+export const checkIfBookmarked = async (postId, username) => await BookmarkPost.findOne({ post_ids: postId, username });
 
-exports.bookmarkPost = async (postId, username) => {
+export const bookmarkPost = async (postId, username) => {
   const previouslyBookmarkedPosts = await BookmarkPost.findOne({ username });
 
   // if user previously has bookmarks just update
   if (previouslyBookmarkedPosts) {
-    return await BookmarkPost.findOneAndUpdate(
-      { username },
-      { $push: { post_ids: postId } },
-      { new: true }
-    );
+    return await BookmarkPost.findOneAndUpdate({ username }, { $push: { post_ids: postId } }, { new: true });
   }
 
   // if its the user first bookmark create
@@ -248,8 +240,11 @@ exports.bookmarkPost = async (postId, username) => {
   return await BookmarkPost.create(bookmarkData);
 };
 
-exports.bookmarks = async (username) => {
+export const bookmarks = async (username) => {
   const bookmark = await BookmarkPost.findOne({ username });
+  if (!bookmark) {
+    return [];
+  }
 
   const userBookmarkedPosts = await Post.aggregate([
     {
@@ -270,10 +265,10 @@ exports.bookmarks = async (username) => {
         site_name: 1,
         favicon: 1,
         created_at: 1,
-        commentCount: { $size: "$comments" },
-        loveCount: { $size: "$loves" },
+        commentCount: { $size: '$comments' },
+        loveCount: { $size: '$loves' },
         isLovedByMe: {
-          $in: [username, "$loves.author"],
+          $in: [username, '$loves.author'],
         },
         tags: 1,
       },
@@ -283,15 +278,15 @@ exports.bookmarks = async (username) => {
   return userBookmarkedPosts;
 };
 
-exports.deleteComment = async (username, postId, commentId) => {
+export const deleteComment = async (username, postId, commentId) => {
   const post = await Post.findById(postId);
   if (post == null) {
-    throw new Error("post not found");
+    throw new Error('post not found');
   }
 
   const comment = post.comments.find((c) => c._id == commentId);
   if (post.author !== username && comment.author !== username) {
-    throw new Error("not authorized");
+    throw new Error('not authorized');
   }
 
   const updatedPost = await Post.findByIdAndUpdate(
@@ -301,13 +296,13 @@ exports.deleteComment = async (username, postId, commentId) => {
         comments: { _id: commentId },
       },
     },
-    { new: true }
+    { new: true },
   );
 
   return updatedPost;
 };
 
-exports.getUserFeedPosts = async (username) => {
+export const getUserFeedPosts = async (username) => {
   let feedPosts = [];
   const user = await userService.getUserByUsername(username);
   if (user && user.following.length > 0) {
@@ -320,8 +315,7 @@ exports.getUserFeedPosts = async (username) => {
     }
 
     const sortedPosts = feedPosts.sort(
-      (firstEl, secondEl) =>
-        new Date(secondEl.created_at) - new Date(firstEl.created_at)
+      (firstEl, secondEl) => new Date(secondEl.created_at) - new Date(firstEl.created_at),
     );
 
     return sortedPosts;

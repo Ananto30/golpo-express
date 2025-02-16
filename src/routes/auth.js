@@ -1,22 +1,19 @@
-const express = require("express");
+import express from 'express';
 const router = express.Router();
 
-const authController = require("../controller/auth.controller");
-const validateSchema = require("../middleware/validate");
-router.post(
-  "/login",
-  validateSchema(authController.validators.login),
-  authController.login
-);
+import * as authController from '../controller/auth.controller.js';
+import validateSchema from '../middleware/validate.js';
 
-router.post("/login/google", authController.googleLogin);
+router.post('/login', validateSchema(authController.validators.login), authController.login);
 
-router.get("/login/google/getAuthUrl", authController.getGoogleAuthUrl);
+router.post('/login/google', authController.googleLogin);
+
+router.get('/login/google/getAuthUrl', authController.getGoogleAuthUrl);
 
 router.post(
-  "/login/google/getToken",
+  '/login/google/getToken',
   validateSchema(authController.validators.getTokenByGoogleCode),
-  authController.getTokenByGoogleCode
+  authController.getTokenByGoogleCode,
 );
 
-module.exports = router;
+export default router;

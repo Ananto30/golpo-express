@@ -1,4 +1,4 @@
-const { checkSchema, validationResult } = require("express-validator");
+import { checkSchema, validationResult } from 'express-validator';
 
 const validateSchema = (schema) => {
   return async (req, res, next) => {
@@ -17,4 +17,4 @@ const validateSchema = (schema) => {
   };
 };
 
-module.exports = validateSchema;
+export default validateSchema;

@@ -1,14 +1,11 @@
-const authService = require("../service/auth.service");
-const googleAuthService = require("../service/google.auth.service");
+import * as authService from '../service/auth.service.js';
+import * as googleAuthService from '../service/google.auth.service.js';
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const token = await authService.verifyUserAndGenerateToken(
-      username,
-      password
-    );
+    const token = await authService.verifyUserAndGenerateToken(username, password);
 
     res.status(200).json({ access_token: token });
   } catch (err) {
@@ -18,13 +15,11 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.googleLogin = async (req, res) => {
+export const googleLogin = async (req, res) => {
   try {
     const { data } = req.body;
 
-    const token = await authService.findOrCreateGoogleUserAndGenerateToken(
-      data
-    );
+    const token = await authService.findOrCreateGoogleUserAndGenerateToken(data);
 
     res.status(200).json({ access_token: token });
   } catch (err) {
@@ -34,7 +29,7 @@ exports.googleLogin = async (req, res) => {
   }
 };
 
-exports.getGoogleAuthUrl = async (req, res) => {
+export const getGoogleAuthUrl = async (req, res) => {
   try {
     const url = await googleAuthService.getGoogleAuthUrl();
 
@@ -46,7 +41,7 @@ exports.getGoogleAuthUrl = async (req, res) => {
   }
 };
 
-exports.getTokenByGoogleCode = async (req, res) => {
+export const getTokenByGoogleCode = async (req, res) => {
   try {
     const { code } = req.body;
 
@@ -61,12 +56,12 @@ exports.getTokenByGoogleCode = async (req, res) => {
   }
 };
 
-exports.validators = {
+export const validators = {
   login: {
-    username: { exists: true, errorMessage: "username is required" },
-    password: { exists: true, errorMessage: "password is required" },
+    username: { exists: true, errorMessage: 'username is required' },
+    password: { exists: true, errorMessage: 'password is required' },
   },
   getTokenByGoogleCode: {
-    code: { exists: true, errorMessage: "code is required" },
+    code: { exists: true, errorMessage: 'code is required' },
   },
 };

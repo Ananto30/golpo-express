@@ -1,60 +1,31 @@
-const express = require("express");
+import express from 'express';
 const router = express.Router();
 
-const userController = require("../controller/user.controller");
-const tokenMiddleware = require("../middleware/token");
-const validateSchema = require("../middleware/validate");
+import * as userController from '../controller/user.controller.js';
+import { checkToken } from '../middleware/token.js';
+import validateSchema from '../middleware/validate.js';
 
-router.get("/", tokenMiddleware.checkToken, userController.getAllUsers);
+router.get('/', checkToken, userController.getAllUsers);
 
-router.get(
-  "/me",
-  tokenMiddleware.checkToken,
-  userController.getUserMetaByToken
-);
+router.get('/me', checkToken, userController.getUserMetaByToken);
 
 router.post(
-  "/get_users_meta",
-  tokenMiddleware.checkToken,
+  '/get_users_meta',
+  checkToken,
   validateSchema(userController.validators.getUsersMeta),
-  userController.getUsersMeta
+  userController.getUsersMeta,
 );
 
-router.post(
-  "/me/update",
-  tokenMiddleware.checkToken,
-  validateSchema(userController.validators.updateMeta),
-  userController.updateMeta
-);
+router.post('/me/update', checkToken, validateSchema(userController.validators.updateMeta), userController.updateMeta);
 
-router.get(
-  "/:username",
-  tokenMiddleware.checkToken,
-  userController.getUserDetails
-);
+router.get('/:username', checkToken, userController.getUserDetails);
 
-router.post(
-  "/:username/follow",
-  tokenMiddleware.checkToken,
-  userController.followUser
-);
+router.post('/:username/follow', checkToken, userController.followUser);
 
-router.post(
-  "/:username/unfollow",
-  tokenMiddleware.checkToken,
-  userController.unFollowUser
-);
+router.post('/:username/unfollow', checkToken, userController.unFollowUser);
 
-router.get(
-  "/:username/followers",
-  tokenMiddleware.checkToken,
-  userController.getFollowers
-);
+router.get('/:username/followers', checkToken, userController.getFollowers);
 
-router.get(
-  "/:username/following",
-  tokenMiddleware.checkToken,
-  userController.getFollowing
-);
+router.get('/:username/following', checkToken, userController.getFollowing);
 
-module.exports = router;
+export default router;

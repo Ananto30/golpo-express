@@ -1,5 +1,6 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose';
+
+const { Schema } = mongoose;
 
 const notificationSchema = new Schema({
   post_id: String,
@@ -9,6 +10,4 @@ const notificationSchema = new Schema({
   created_at: Date,
 });
 
-module.exports = {
-  Notification: mongoose.model("Notification", notificationSchema),
-};
+export const Notification = mongoose.model('Notification', notificationSchema);

@@ -1,11 +1,10 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose';
+
+const { Schema } = mongoose;
 
 const bookmarkPostSchema = new Schema({
   username: String,
   post_ids: [mongoose.Types.ObjectId],
 });
 
-module.exports = {
-  BookmarkPost: mongoose.model("BookmarkPost", bookmarkPostSchema),
-};
+export const BookmarkPost = mongoose.model('BookmarkPost', bookmarkPostSchema);

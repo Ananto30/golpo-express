@@ -1,19 +1,19 @@
-const ActivityModel = require("../model/activity.model");
-const Activity = ActivityModel.Activity;
+import { Activity } from '../model/activity.model.js';
+import { connection } from '../controller/socket.controller.js';
 
-exports.getAll = async () => {
+export const getAll = async () => {
   return await Activity.find({});
 };
 
-exports.getLatest = async (limit) => {
-  return await Activity.find({}).sort({date: -1}).limit(limit);
+export const getLatest = async (limit) => {
+  return await Activity.find({}).sort({ date: -1 }).limit(limit);
 };
 
-exports.getByUsername = async (username) => {
-  return await Activity.find({username: username});
+export const getByUsername = async (username) => {
+  return await Activity.find({ username: username });
 };
 
-exports.createActivity = async (data) => {
+export const createActivity = async (data) => {
   const actData = {
     username: data.username,
     summary: data.summary,
@@ -27,7 +27,7 @@ exports.createActivity = async (data) => {
   return activity;
 };
 
-sendSocketActivity = (data) => {
-  const io = require("../controller/socket.controller").connection();
-  io.sendToAll("activity", JSON.stringify(data));
+const sendSocketActivity = (data) => {
+  const io = connection();
+  io.sendToAll('activity', JSON.stringify(data));
 };

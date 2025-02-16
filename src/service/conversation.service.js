@@ -1,16 +1,12 @@
-const ConversationModel = require("../model/conversation.model");
-const mongoose = require('mongoose');
-const Conversation = ConversationModel.Conversation;
+import { Conversation } from '../model/conversation.model.js';
+import mongoose from 'mongoose';
 
-exports.getChatListAndLastChatForUser = async (username) => {
-  const chats = await Conversation.find(
-    { participants: { $all: [username] } },
-    { chats: { $slice: -1 } }
-  );
+export const getChatListAndLastChatForUser = async (username) => {
+  const chats = await Conversation.find({ participants: { $all: [username] } }, { chats: { $slice: -1 } });
   return chats;
 };
 
-exports.getChatByUsernameForUser = async (sender, receiver) => {
+export const getChatByUsernameForUser = async (sender, receiver) => {
   let chats = await Conversation.findOne({
     participants: {
       $size: 2,
@@ -28,7 +24,7 @@ exports.getChatByUsernameForUser = async (sender, receiver) => {
 
 /* IMPORTANT: This must be used when conversation exists
    To initiate conversation use `sendMessage` */
-exports.sendChat = async (sender, receiver, text) => {
+export const sendChat = async (sender, receiver, text) => {
   let chats = await Conversation.updateOne(
     { participants: { $size: 2, $all: [sender, receiver] } },
     {
@@ -41,7 +37,7 @@ exports.sendChat = async (sender, receiver, text) => {
         },
       },
     },
-    { upsert: true }
+    { upsert: true },
   );
   if (chats.length === 0) {
     chats = await Conversation.create({
@@ -53,41 +49,39 @@ exports.sendChat = async (sender, receiver, text) => {
 };
 
 /* IMPORTANT: This is basically used to initiate a conversation */
-exports.sendMessage = async (sender, receiver, text) => {
+export const sendMessage = async (sender, receiver, text) => {
   // initialize, because this method creates new chat if not found
-  await this.getChatByUsernameForUser(sender, receiver);
+  await getChatByUsernameForUser(sender, receiver);
   // send
-  await this.sendChat(sender, receiver, text);
+  await sendChat(sender, receiver, text);
 
   return true;
 };
 
-exports.chatSeen = async (sender, receiver, chatId) => {
+export const chatSeen = async (sender, receiver, chatId) => {
   if (!mongoose.Types.ObjectId.isValid(chatId))
     return {
       errors: [
         {
-          msg: "User not found",
-          status: "404",
+          msg: 'User not found',
+          status: '404',
         },
       ],
     };
   const chats = await Conversation.findOneAndUpdate(
     {
       participants: [sender, receiver],
-      "chats._id": chatId,
+      'chats._id': chatId,
     },
-    { "chats.$.seen": true },
-    { new: true }
+    { 'chats.$.seen': true },
+    { new: true },
   );
 
   if (!chats || chats.length === 0) {
     return {
       participants: [sender, receiver],
       chats: [],
-    }
+    };
   }
   return chats;
 };
-
-

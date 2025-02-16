@@ -1,36 +1,23 @@
-const express = require("express");
+import express from 'express';
 const router = express.Router();
 
-const chatController = require("../controller/chat.controller");
-const tokenMiddleware = require("../middleware/token");
-const validateSchema = require("../middleware/validate");
+import * as chatController from '../controller/chat.controller.js';
+import { checkToken } from '../middleware/token.js';
+import validateSchema from '../middleware/validate.js';
 
-router.get("/", tokenMiddleware.checkToken, chatController.getChats);
+router.get('/', checkToken, chatController.getChats);
 
-router.get(
-  "/:receiver",
-  tokenMiddleware.checkToken,
-  chatController.getByReceiver
-);
+router.get('/:receiver', checkToken, chatController.getByReceiver);
+
+router.post('/:receiver', checkToken, validateSchema(chatController.validators.sendChat), chatController.sendChat);
 
 router.post(
-  "/:receiver",
-  tokenMiddleware.checkToken,
+  '/:receiver/message',
+  checkToken,
   validateSchema(chatController.validators.sendChat),
-  chatController.sendChat
+  chatController.sendMessage,
 );
 
-router.post(
-  "/:receiver/message",
-  tokenMiddleware.checkToken,
-  validateSchema(chatController.validators.sendChat),
-  chatController.sendMessage
-);
+router.put('/:receiver/:chatId/seen', checkToken, chatController.chatSeen);
 
-router.put(
-  "/:receiver/:chatId/seen",
-  tokenMiddleware.checkToken,
-  chatController.chatSeen
-);
-
-module.exports = router;
+export default router;

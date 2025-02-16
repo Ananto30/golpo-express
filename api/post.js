@@ -1,68 +1,40 @@
-const express = require("express");
+import express from 'express';
+import * as postController from '../src/controller/post.controller.js';
+import * as tokenMiddleware from '../src/middleware/token.js';
+import validateSchema from '../src/middleware/validate.js';
+
 const router = express.Router();
 
-const postController = require("../src/controller/post.controller");
-const tokenMiddleware = require("../src/middleware/token");
-const validateSchema = require("../src/middleware/validate");
+router.get('/tags', postController.getAllTags);
+router.get('/bookmarks', tokenMiddleware.checkToken, postController.bookmarks);
+router.get('/feed', tokenMiddleware.checkToken, postController.getUserFeedPosts);
+router.get('/', tokenMiddleware.checkToken, postController.getAll);
+router.get('/:id', tokenMiddleware.checkToken, postController.getById);
 
-router.get("/tags", postController.getAllTags);
-router.get("/bookmarks", tokenMiddleware.checkToken, postController.bookmarks);
-router.get(
-  "/feed",
-  tokenMiddleware.checkToken,
-  postController.getUserFeedPosts
-);
-router.get("/", tokenMiddleware.checkToken, postController.getAll);
-router.get("/:id", tokenMiddleware.checkToken, postController.getById);
+router.post('/:id/delete', tokenMiddleware.checkToken, postController.deletePost);
 
 router.post(
-  "/:id/delete",
-  tokenMiddleware.checkToken,
-  postController.deletePost
-);
-
-router.post(
-  "/",
+  '/',
   tokenMiddleware.checkToken,
   validateSchema(postController.validators.validateUrl),
-  postController.createPost
+  postController.createPost,
 );
 
 router.post(
-  "/:postId/comment",
+  '/:postId/comment',
   tokenMiddleware.checkToken,
   validateSchema(postController.validators.validateComment),
-  postController.createComment
+  postController.createComment,
 );
 
-router.post(
-  "/:postId/love",
-  tokenMiddleware.checkToken,
-  postController.reactLove
-);
+router.post('/:postId/love', tokenMiddleware.checkToken, postController.reactLove);
 
-router.post(
-  "/:postId/bookmark",
-  tokenMiddleware.checkToken,
-  postController.bookmarkPost
-);
+router.post('/:postId/bookmark', tokenMiddleware.checkToken, postController.bookmarkPost);
 
-router.get(
-  "/user/me",
-  tokenMiddleware.checkToken,
-  postController.getPostsByToken
-);
+router.get('/user/me', tokenMiddleware.checkToken, postController.getPostsByToken);
 
-router.get(
-  "/user/:username",
-  tokenMiddleware.checkToken,
-  postController.getPostsByUsername
-);
+router.get('/user/:username', tokenMiddleware.checkToken, postController.getPostsByUsername);
 
-router.post(
-  "/:postId/comment/:commentId/delete",
-  tokenMiddleware.checkToken,
-  postController.deleteComment
-);
+router.post('/:postId/comment/:commentId/delete', tokenMiddleware.checkToken, postController.deleteComment);
 
-module.exports = router;
+export default router;

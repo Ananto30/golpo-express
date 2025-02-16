@@ -1,8 +1,8 @@
-const notificationService = require("../service/notification.service");
+import * as notificationService from '../service/notification.service.js';
 
 // Not needed but incase
 
-// exports.createCommentNotification = async (req, res) => {
+// export const createCommentNotification = async (req, res) => {
 //   try {
 //     const comment_author = req.decoded.username;
 //     const postId = req.params.id;
@@ -20,12 +20,10 @@ const notificationService = require("../service/notification.service");
 //   }
 // };
 
-exports.getNotificationsByUsername = async (req, res) => {
+export const getNotificationsByUsername = async (req, res) => {
   try {
     const { username } = req.params;
-    const notifications = await notificationService.getNotificationsByUsername(
-      username
-    );
+    const notifications = await notificationService.getNotificationsByUsername(username);
 
     res.status(200).json({ notifications });
   } catch (err) {
@@ -35,7 +33,7 @@ exports.getNotificationsByUsername = async (req, res) => {
   }
 };
 
-exports.notificationClicked = async (req, res) => {
+export const notificationClicked = async (req, res) => {
   try {
     const { id } = req.params;
     const { username } = req.decoded;
@@ -43,18 +41,16 @@ exports.notificationClicked = async (req, res) => {
     const notification = await notificationService.findOneNotificationById(id);
 
     if (!notification) {
-      res.status(404).json({ errors: "Notification not found" });
+      res.status(404).json({ errors: 'Notification not found' });
       return;
     }
 
     if (notification.comment_author !== username) {
-      res.status(405).json({ errors: "Not allowed" });
+      res.status(405).json({ errors: 'Not allowed' });
       return;
     }
 
-    const clickedNotification = await notificationService.notificationClicked(
-      id
-    );
+    const clickedNotification = await notificationService.notificationClicked(id);
 
     res.status(200).json({ clickedNotification });
   } catch (err) {

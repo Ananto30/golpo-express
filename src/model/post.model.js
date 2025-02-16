@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-const { tags } = require("../constants");
+import mongoose from 'mongoose';
+import { tags } from '../constants.js';
+
+const { Schema } = mongoose;
 
 const postSchema = new Schema(
   {
@@ -28,9 +29,7 @@ const postSchema = new Schema(
     ],
     tags: { type: [String], enum: tags },
   },
-  { collection: "post" } // TODO: should be removed, need to fix mongo model
+  { collection: 'post' }, // TODO: should be removed, need to fix mongo model
 );
 
-module.exports = {
-  Post: mongoose.model("Post", postSchema),
-};
+export const Post = mongoose.model('Post', postSchema);
