@@ -31,6 +31,8 @@ router.post('/:postId/love', tokenMiddleware.checkToken, postController.reactLov
 
 router.post('/:postId/bookmark', tokenMiddleware.checkToken, postController.bookmarkPost);
 
+router.post('/:postId/unbookmark', tokenMiddleware.checkToken, postController.unbookmarkPost);
+
 router.get('/user/me', tokenMiddleware.checkToken, postController.getPostsByToken);
 
 router.get('/user/:username', tokenMiddleware.checkToken, postController.getPostsByUsername);

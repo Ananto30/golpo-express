@@ -3,7 +3,7 @@ import config from '../config.js';
 import * as chatService from '../service/conversation.service.js';
 import { Server } from 'socket.io';
 
-// let connection = null;
+export let connection = null;
 
 class Realtime {
   constructor() {
@@ -76,7 +76,7 @@ class Realtime {
 }
 
 export const connect = Realtime.init;
-export const connection = Realtime.getConnection;
+connection = Realtime.getConnection;
 
 export default {
   connect,

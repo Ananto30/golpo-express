@@ -240,6 +240,10 @@ export const bookmarkPost = async (postId, username) => {
   return await BookmarkPost.create(bookmarkData);
 };
 
+export const unbookmarkPost = async (postId, username) => {
+  return await BookmarkPost.findOneAndUpdate({ username }, { $pull: { post_ids: postId } }, { new: true });
+};
+
 export const bookmarks = async (username) => {
   const bookmark = await BookmarkPost.findOne({ username });
   if (!bookmark) {

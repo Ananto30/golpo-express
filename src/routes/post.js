@@ -26,6 +26,8 @@ router.post('/:postId/love', checkToken, postController.reactLove);
 
 router.post('/:postId/bookmark', checkToken, postController.bookmarkPost);
 
+router.post('/:postId/unbookmark', checkToken, postController.unbookmarkPost);
+
 router.get('/user/me', checkToken, postController.getPostsByToken);
 
 router.get('/user/:username', checkToken, postController.getPostsByUsername);

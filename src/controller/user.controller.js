@@ -106,6 +106,7 @@ export const getUserDetails = async (req, res) => {
     const user = await userService.getUserByUsername(username);
     if (!user) {
       res.status(400).send("User doesn't exists");
+      return;
     }
     const userMeta = await userService.getUserMeta(username);
     let data = {

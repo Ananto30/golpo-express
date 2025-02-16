@@ -167,6 +167,28 @@ export const bookmarkPost = async (req, res) => {
   }
 };
 
+export const unbookmarkPost = async (req, res) => {
+  try {
+    const { username } = req.decoded;
+    const { postId } = req.params;
+
+    const checkIfPreviouslyBookmarked = await postService.checkIfBookmarked(postId, username);
+
+    if (!checkIfPreviouslyBookmarked) {
+      res.status(404).json({ errors: 'post not bookmarked' });
+      return;
+    }
+
+    const unbookmarkedpost = await postService.unbookmarkPost(postId, username);
+
+    res.status(200).json({ unbookmarkedpost });
+  } catch (err) {
+    res.status(500).json({ errors: err.message });
+    console.log(err);
+    return;
+  }
+};
+
 export const bookmarks = async (req, res) => {
   try {
     const { username } = req.decoded;
