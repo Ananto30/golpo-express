@@ -135,7 +135,7 @@ export const createComment = async (author, text, postId) => {
     },
   );
 
-  await notificationService.createCommentNotification(postId, author);
+  await notificationService.createCommentNotification(post, author);
 
   const data = {
     username: author,

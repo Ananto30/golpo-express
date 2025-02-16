@@ -1,12 +1,11 @@
 import { Notification } from '../model/notification.model.js';
-import * as postService from './post.service.js';
 
-export const createCommentNotification = async (postId, comment_author) => {
-  const post = await postService.getPostById(postId);
+export const createCommentNotification = async (post, comment_author) => {
   const username = post.author;
+  if (username === comment_author) return;
 
   const notificationData = {
-    post_id: postId,
+    post_id: post._id,
     username,
     comment_author,
     clicked: false,
@@ -16,7 +15,7 @@ export const createCommentNotification = async (postId, comment_author) => {
   return commentNotification;
 };
 
-export const getNotificationsByUsername = async (username) => await Notification.find({ comment_author: username });
+export const getNotificationsByUsername = async (username) => await Notification.find({ username: username });
 
 export const findOneNotificationById = async (id) => await Notification.findById(id);
 

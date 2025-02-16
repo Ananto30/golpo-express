@@ -209,7 +209,7 @@ export const deleteComment = async (req, res) => {
 
     const post = await postService.deleteComment(username, postId, commentId);
 
-    res.status(200).json({ post });
+    res.status(200).json(post);
   } catch (err) {
     if (err.message === 'not authorized') {
       res.status(400).json({ errors: err.message });
