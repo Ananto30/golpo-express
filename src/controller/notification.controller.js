@@ -45,7 +45,7 @@ export const notificationClicked = async (req, res) => {
       return;
     }
 
-    if (notification.comment_author !== username) {
+    if (notification.username !== username) {
       res.status(405).json({ errors: 'Not allowed' });
       return;
     }
