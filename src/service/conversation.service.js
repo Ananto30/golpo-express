@@ -1,5 +1,5 @@
-import { Conversation } from '../model/conversation.model.js';
 import mongoose from 'mongoose';
+import { Conversation } from '../model/conversation.model.js';
 
 export const getChatListAndLastChatForUser = async (username) => {
   const chats = await Conversation.find({ participants: { $all: [username] } }, { chats: { $slice: -1 } });

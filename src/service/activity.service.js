@@ -1,5 +1,5 @@
-import { Activity } from '../model/activity.model.js';
 import { connection } from '../controller/socket.controller.js';
+import { Activity } from '../model/activity.model.js';
 
 export const getAll = async () => {
   return await Activity.find({});

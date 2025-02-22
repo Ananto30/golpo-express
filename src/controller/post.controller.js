@@ -1,4 +1,4 @@
-import { tags, adultURLs } from '../constants.js';
+import { adultURLs, tags } from '../constants.js';
 import * as postService from '../service/post.service.js';
 
 export const getAll = async (req, res) => {
@@ -244,7 +244,7 @@ export const validators = {
 
   validateUrl: {
     url: {
-      isUrl: {
+      isURL: {
         errorMessage: 'Must be a Valid URL',
         options: {
           protocols: ['http', 'https', 'ftp'],

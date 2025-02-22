@@ -1,8 +1,9 @@
-import { Post } from '../model/post.model.js';
-import { BookmarkPost } from '../model/bookmark.model.js';
-import * as activityService from './activity.service.js';
-import * as notificationService from './notification.service.js';
 import { getLinkPreview } from 'link-preview-js';
+import { BookmarkPost } from '../model/bookmark.model.js';
+import { Post } from '../model/post.model.js';
+import * as activityService from './activity.service.js';
+import { tryMakeMetadata } from './linkPreview.service.js';
+import * as notificationService from './notification.service.js';
 import * as userService from './user.service.js';
 
 export const getAllPosts = async (tokenUser) => {
@@ -102,8 +103,12 @@ export const createPost = async (author, url, tags) => {
 };
 
 const extractUrlMetadata = async (url) => {
-  const metadata = await getLinkPreview(url);
-  return metadata;
+  try {
+    return await getLinkPreview(url);
+  } catch (error) {
+    console.error('Error extracting metadata:', error);
+    return await tryMakeMetadata(url);
+  }
 };
 
 export const createComment = async (author, text, postId) => {

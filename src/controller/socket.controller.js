@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
+import { Server } from 'socket.io';
 import config from '../config.js';
 import * as chatService from '../service/conversation.service.js';
-import { Server } from 'socket.io';
 
 export let connection = null;
 

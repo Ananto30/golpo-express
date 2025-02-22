@@ -1,25 +1,5 @@
 import * as notificationService from '../service/notification.service.js';
 
-// Not needed but incase
-
-// export const createCommentNotification = async (req, res) => {
-//   try {
-//     const comment_author = req.decoded.username;
-//     const postId = req.params.id;
-
-//     const notification = await notificationService.createCommentNotification(
-//       postId,
-//       comment_author
-//     );
-
-//     res.status(200).json(notification);
-//   } catch (err) {
-//     res.status(500).json({ errors: err.message });
-//     console.log(err);
-//     return;
-//   }
-// };
-
 export const getNotificationsByUsername = async (req, res) => {
   try {
     const { username } = req.params;

@@ -1,31 +1,19 @@
-import express from 'express';
-import logger from 'morgan';
 import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
 import cors from 'cors';
+import express from 'express';
+import mongoose from 'mongoose';
+import logger from 'morgan';
 
-import authRouter from './api/auth.js';
-import postRouter from './api/post.js';
-import chatRouter from './api/chat.js';
-import userRouter from './api/user.js';
 import activityRouter from './api/activity.js';
+import authRouter from './api/auth.js';
+import chatRouter from './api/chat.js';
 import notificationRouter from './api/notification.js';
+import postRouter from './api/post.js';
+import userRouter from './api/user.js';
 
 import config from './src/config.js';
 
 const app = express();
-
-function requireHTTPS(req, res, next) {
-  // The 'x-forwarded-proto' check is for Heroku
-  if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV !== 'development') {
-    return res.redirect('https://' + req.get('host') + req.url);
-  }
-  next();
-}
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(requireHTTPS);
-}
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -33,7 +21,13 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ['https://golpo.vercel.app', 'http://localhost:5173'],
+    methods: ['GET', 'POST', 'HEAD'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  }),
+);
 
 mongoose.connect(config.mongoUrl);
 
