@@ -21,7 +21,7 @@
     "jsonwebtoken": "^9.0.2",
     "link-preview-js": "^3.0.15",
     "mongoose": "^8.12.1",
-    "morgan": "~1.10.0",
+    "morgan": "~1.10.1",
     "socket.io": "^4.8.1"
   },
   "devDependencies": {
