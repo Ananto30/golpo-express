@@ -20,7 +20,7 @@
     "googleapis": "^154.1.0",
     "jsonwebtoken": "^9.0.2",
     "link-preview-js": "^3.1.0",
-    "mongoose": "^8.17.1",
+    "mongoose": "^8.17.2",
     "morgan": "~1.10.1",
     "socket.io": "^4.8.1"
   },
