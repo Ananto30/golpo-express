@@ -16,7 +16,7 @@
     "cors": "^2.8.5",
     "debug": "~4.4.1",
     "express": "~5.1.0",
-    "express-validator": "^7.2.1",
+    "express-validator": "^7.3.0",
     "googleapis": "^154.1.0",
     "jsonwebtoken": "^9.0.2",
     "link-preview-js": "^3.1.0",
