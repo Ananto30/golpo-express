@@ -14,7 +14,7 @@
   "dependencies": {
     "cookie-parser": "~1.4.7",
     "cors": "^2.8.5",
-    "debug": "~4.4.1",
+    "debug": "~4.4.3",
     "express": "~5.2.1",
     "express-validator": "^7.3.1",
     "googleapis": "^154.1.0",
