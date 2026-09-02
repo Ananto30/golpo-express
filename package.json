@@ -19,7 +19,7 @@
     "express-validator": "^7.3.1",
     "googleapis": "^166.0.0",
     "jsonwebtoken": "^9.0.2",
-    "link-preview-js": "^4.0.0",
+    "link-preview-js": "^4.0.4",
     "mongoose": "^8.20.1",
     "morgan": "~1.10.1",
     "socket.io": "^4.8.1"
