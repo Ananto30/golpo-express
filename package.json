@@ -17,22 +17,22 @@
     "debug": "~4.4.3",
     "express": "~5.2.1",
     "express-validator": "^7.3.2",
-    "googleapis": "^180.0.0",
+    "googleapis": "^181.0.0",
     "jsonwebtoken": "^9.0.3",
     "link-preview-js": "^5.0.0",
-    "mongoose": "^9.10.0",
+    "mongoose": "^9.10.1",
     "morgan": "^1.12.1",
-    "socket.io": "^4.8.3"
+    "socket.io": "^4.8.4"
   },
   "devDependencies": {
-    "@babel/cli": "^8.0.5",
-    "@babel/core": "^8.0.5",
+    "@babel/cli": "^8.0.6",
+    "@babel/core": "^8.0.6",
     "@babel/preset-env": "^8.0.5",
-    "babel-jest": "^30.5.1",
-    "eslint": "^10.10.0",
+    "babel-jest": "^30.5.2",
+    "eslint": "^10.11.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
-    "jest": "^30.5.1",
-    "prettier": "^3.9.6"
+    "jest": "^30.5.2",
+    "prettier": "^3.9.9"
   }
 }
