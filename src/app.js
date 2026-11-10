@@ -4,14 +4,13 @@ import express from 'express';
 import mongoose from 'mongoose';
 import logger from 'morgan';
 
+import config from './config.js';
 import activityRouter from './routes/activity.js';
 import authRouter from './routes/auth.js';
 import chatRouter from './routes/chat.js';
 import notificationRouter from './routes/notification.js';
 import postRouter from './routes/post.js';
 import userRouter from './routes/user.js';
-
-import config from './config.js';
 
 const app = express();
 

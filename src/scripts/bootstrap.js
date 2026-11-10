@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
-import config from '../config';
-import * as userService from '../service/user.service';
+
+import config from '../config.js';
+import * as userService from '../service/user.service.js';
 
 mongoose.connect(config.mongoUrl);
 

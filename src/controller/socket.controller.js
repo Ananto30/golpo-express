@@ -1,9 +1,12 @@
 import jwt from 'jsonwebtoken';
 import { Server } from 'socket.io';
+
 import config from '../config.js';
 import * as chatService from '../service/conversation.service.js';
 
 export let connection = null;
+
+let instance = null;
 
 class Realtime {
   constructor() {
@@ -49,8 +52,9 @@ class Realtime {
       socket.on('message', async (data) => {
         await chatService.sendChat(username, data.receiver, data.text);
 
-        if (data.receiver in self._users) {
-          io.sockets.connected[self._users[data.receiver]].emit('message', data);
+        const receiverSocket = io.sockets.sockets.get(self._users[data.receiver]);
+        if (receiverSocket) {
+          receiverSocket.emit('message', data);
         }
       });
     });
@@ -61,17 +65,18 @@ class Realtime {
   }
 
   static init(server) {
-    if (!connection) {
-      connection = new Realtime();
-      connection.connect(server);
+    if (!instance) {
+      instance = new Realtime();
+      instance.connect(server);
     }
+    return instance;
   }
 
   static getConnection() {
-    if (!connection) {
+    if (!instance) {
       throw new Error('no active connection');
     }
-    return connection;
+    return instance;
   }
 }
 

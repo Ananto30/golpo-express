@@ -1,6 +1,8 @@
 import { google } from 'googleapis';
 import jwt from 'jsonwebtoken';
+
 import config from '../config.js';
+
 import * as userService from './user.service.js';
 
 const oauth2 = google.oauth2('v2');

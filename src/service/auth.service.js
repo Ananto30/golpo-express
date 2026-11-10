@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
+
 import config from '../config.js';
+
 import * as userService from './user.service.js';
 
 export const verifyUserAndGenerateToken = async (username, password) => {

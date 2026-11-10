@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 import { tags } from '../constants.js';
 
 const { Schema } = mongoose;

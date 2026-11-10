@@ -27,6 +27,7 @@ export const createActivity = async (data) => {
   return activity;
 };
 
+// eslint-disable-next-line no-unused-vars
 const sendSocketActivity = (data) => {
   const io = connection();
   io.sendToAll('activity', JSON.stringify(data));

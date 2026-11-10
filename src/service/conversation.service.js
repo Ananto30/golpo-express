@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 import { Conversation } from '../model/conversation.model.js';
 
 export const getChatListAndLastChatForUser = async (username) => {

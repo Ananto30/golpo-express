@@ -10,7 +10,6 @@ import chatRouter from './api/chat.js';
 import notificationRouter from './api/notification.js';
 import postRouter from './api/post.js';
 import userRouter from './api/user.js';
-
 import config from './src/config.js';
 
 const app = express();

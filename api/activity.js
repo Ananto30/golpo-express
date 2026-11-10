@@ -1,4 +1,5 @@
 import express from 'express';
+
 import * as activityController from '../src/controller/activity.controller.js';
 import * as tokenMiddleware from '../src/middleware/token.js';
 

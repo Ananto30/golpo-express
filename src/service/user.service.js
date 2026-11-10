@@ -1,4 +1,5 @@
 import { User, UserInfo } from '../model/user.model.js';
+
 import * as activityService from './activity.service.js';
 
 export const getUserByUsernameAndPass = async (username, password) => {
@@ -91,6 +92,7 @@ export const getFollowing = async (username) => {
   });
 };
 
+// eslint-disable-next-line no-unused-vars
 const metaUpdateActivity = async (username, updateInfo) => {
   let data;
   if (updateInfo.image) {
