@@ -1,4 +1,5 @@
 import express from 'express';
+
 import * as postController from '../src/controller/post.controller.js';
 import * as tokenMiddleware from '../src/middleware/token.js';
 import validateSchema from '../src/middleware/validate.js';

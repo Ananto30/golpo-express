@@ -1,4 +1,5 @@
 import express from 'express';
+
 import * as authController from '../src/controller/auth.controller.js';
 import validateSchema from '../src/middleware/validate.js';
 

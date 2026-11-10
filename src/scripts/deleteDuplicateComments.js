@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
+
 import config from '../config.js';
 import { Post } from '../model/post.model.js';
 
 mongoose.connect(config.mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 
+// eslint-disable-next-line no-unused-vars
 const deleteDuplicateComments = async () => {
   try {
     const posts = await Post.find({});

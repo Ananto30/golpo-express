@@ -1,6 +1,8 @@
 import { getLinkPreview } from 'link-preview-js';
+
 import { BookmarkPost } from '../model/bookmark.model.js';
 import { Post } from '../model/post.model.js';
+
 import * as activityService from './activity.service.js';
 import { tryMakeMetadata } from './linkPreview.service.js';
 import * as notificationService from './notification.service.js';

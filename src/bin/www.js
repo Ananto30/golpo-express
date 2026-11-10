@@ -4,9 +4,11 @@
  * Module dependencies.
  */
 
-import app from '../app.js';
-import debugLib from 'debug';
 import http from 'http';
+
+import debugLib from 'debug';
+
+import app from '../app.js';
 import realtime from '../controller/socket.controller.js';
 
 const debug = debugLib('golpo13-backend:server');

@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+
 import config from '../config.js';
 
 export const checkToken = (req, res, next) => {

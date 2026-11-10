@@ -1,6 +1,6 @@
 // filepath: /Users/azizul/projects/golpo-express/test/user.service.test.js
-import * as userService from '../src/service/user.service.js';
 import { User } from '../src/model/user.model.js';
+import * as userService from '../src/service/user.service.js';
 
 jest.mock('../src/model/user.model.js');
 

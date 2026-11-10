@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 import config from '../config.js';
 import { Notification } from '../model/notification.model.js';
 
